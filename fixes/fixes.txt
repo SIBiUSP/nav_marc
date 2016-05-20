@@ -33,6 +33,11 @@ marc_map('1008','colab_instituicao.$append')
 marc_map('1009','colab.$append')
 # 510 - Indexado em
 marc_map('510a','indexado.$append')
+
+# 536a - Agência de fomento
+marc_map('536a','fomento.$append')
+
+
 # 650 - Assunto
 marc_map('650[ 7]a','subject.$append')
 # 700 - Autores

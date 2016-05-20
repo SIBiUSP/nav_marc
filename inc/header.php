@@ -281,22 +281,6 @@
         </a>
         <div class="right menu">
           <div class="item">
-            <div class="ui transparent icon input">
-              <form class="form-inline pull-xs-right" action="result.php" method="get">
-              <i class="search icon"></i>
-              <input type="text" name="q" placeholder="Buscar em Títulos, Autores e Resumos">
-              <select class="ui dropdown" name="category" style="color:black;">
-                <option value="buscaindice">Título, autores e resumos</option>
-                <!-- <option value="altmetrics.references">Referências</option> -->
-                <!-- <option value="full_text">Texto completo dos artigos</option> -->
-                <!--<option value="autor">Nome do autor</option> -->
-                <!-- <option value="subject">Assunto</option> -->
-              </select>
-              <button class="ui button">Buscar</button>
-              </form>
-            </div>
-          </div>
-          <div class="item">
             <a class="ui button" href="login.php">Login</a>
           </div>
         </div>
