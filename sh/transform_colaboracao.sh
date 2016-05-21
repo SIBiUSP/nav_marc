@@ -44,9 +44,9 @@ IFS='|' read -ra instituicao <<< "$instituicao"
      			then
      				instituicao_tematres=$(printf "$vocabci_result")
      				instituicao_tematres_id=$(printf "$vocabci_result_id")
-            echo "db.producao.update({\"_id\" : \""$_id"\"},{\$addToSet: {colab_instituicao_corrigido: \"$instituicao_tematres\"}})" #| mongo sibi
+            echo "db.producao.update({\"_id\" : \""$_id"\"},{\$addToSet: {colab_instituicao_corrigido: \"$instituicao_tematres\"}})" | mongo sibi
      			else
-            echo "db.producao.update({\"_id\" : \""$_id"\"},{\$addToSet: {colab_instituicao_corrigido: \"$instituicao_limpa\"}})" #| mongo sibi
+            echo "db.producao.update({\"_id\" : \""$_id"\"},{\$addToSet: {colab_instituicao_corrigido: \"$instituicao_limpa\"}})" | mongo sibi
      			fi
 
 #  line=$(printf "%s\n" "\"$_id\",\"$subject_tematres\",\"$subject_tematres_id\"")
