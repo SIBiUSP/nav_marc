@@ -150,6 +150,7 @@
         generateFacet($url, $c, $query, '$colab_instituicao', 'count', -1, 'Colaboração - Instituição', 50);
         generateFacet($url, $c, $query, '$colab_instituicao_trab', 'count', -1, 'Colaboração - Instituição - Trabalhos', 50);
         generateFacet($url, $c, $query, '$colab_instituicao_corrigido', 'count', -1, 'Colaboração - Instituição - Corrigido', 100);
+        generateFacet($url, $c, $query, '$colab_instituicao_naocorrigido', 'count', -1, 'Colaboração - Instituição - Não corrigido', 100);
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
         generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
