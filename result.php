@@ -155,6 +155,7 @@
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
         generateFacet($url, $c, $query, '$indexado', 'count', -1, 'Indexado em:', 50);
+        generateFacet($url, $c, $query, '$fomento', 'count', -1, 'Agência de fomento:', 50);
         }
         generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
         generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
