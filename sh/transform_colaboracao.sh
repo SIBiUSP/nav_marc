@@ -24,7 +24,7 @@ do
   echo $count_record
   count_record=$((count_record+1))
 
-line=$(printf "%s\n" "$line" | sed "s/,\"/#/g" | sed 's/\"//g' | sed "s/\"\",\"\"/|/g" | sed 's/,\"\[\"\"/#/g' | sed 's/\"\"\]\"//g' )
+line=$(printf "%s\n" "$line" | sed "s/,\"/#/g" | sed "s/\"\",\"\"/|/g" | sed 's/,\"\[\"\"/#/g' | sed 's/\"\"\]\"//g' )
 _id=$(printf "%s\n" "$line" | cut -d "#" -f 1 | sed 's/\"//g')
 instituicao=$(printf "%s\n" "$line" | cut -d "#" -f 2 )
 
