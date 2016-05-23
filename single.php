@@ -135,6 +135,8 @@
         print_r($output)
         ?>
       </div>
+      <br/><br/><br/><h3>Ver registro no DEDALUS</h3>
+      <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $cursor["result"][0]["_id"];?>">Ver no Dedalus</a>
 
       <h3>Exportar</h3>
     </div>

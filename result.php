@@ -5,12 +5,12 @@
   include 'inc/header.php';
   include_once 'inc/functions.php';
 
-  if (empty($_SESSION["citation_style"])) {
-    $_SESSION["citation_style"]="abnt";
-  }
-  if (isset($_POST["citation_style"])) {
-    $_SESSION["citation_style"] = $_POST['citation_style'];
-  }
+#  if (empty($_SESSION["citation_style"])) {
+#    $_SESSION["citation_style"]="abnt";
+#  }
+#  if (isset($_POST["citation_style"])) {
+#    $_SESSION["citation_style"] = $_POST['citation_style'];
+#  }
 
   if (empty($_SESSION["login_role"])) {
     $_SESSION["login_role"]="annonymous";
@@ -22,11 +22,11 @@
 
 
   /* Citeproc-PHP*/
-  include 'inc/citeproc-php/CiteProc.php';
-  $csl = file_get_contents('inc/citeproc-php/style/'.$_SESSION["citation_style"].'.csl');
-  $lang = "br";
-  $citeproc = new citeproc($csl,$lang);
-  $mode = "reference";
+#  include 'inc/citeproc-php/CiteProc.php';
+#  $csl = file_get_contents('inc/citeproc-php/style/'.$_SESSION["citation_style"].'.csl');
+#  $lang = "br";
+#  $citeproc = new citeproc($csl,$lang);
+#  $mode = "reference";
 
 
   /* Pegar a URL atual */
@@ -244,23 +244,23 @@
   ?>
 
   <br/>  <br/>
-
+<!--
   <h3> Escolha o estilo da Citação:</h3>
   <div class="ui compact menu">
-    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+    <form method="post" action="result.php?< ?php echo $_SERVER['QUERY_STRING']; ?>">
       <button  type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
     </form>
-    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+    <form method="post" action="result.php?< ?php echo $_SERVER['QUERY_STRING']; ?>">
       <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
     </form>
-    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+    <form method="post" action="result.php?< ?php echo $_SERVER['QUERY_STRING']; ?>">
       <button type="submit" name="citation_style" class="ui icon button" value="nlm">NLM</button>
     </form>
-    <form method="post" action="result.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+    <form method="post" action="result.php?< ?php echo $_SERVER['QUERY_STRING']; ?>">
       <button type="submit" name="citation_style" class="ui icon button" value="vancouver">Vancouver</button>
     </form>
   </div>
-
+-->
 <div class="ui divided items">
 <?php foreach ($cursor['result'] as $r): ?>
   <div class="item">
@@ -325,9 +325,9 @@
     <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
   <?php endif; ?>
   </div>
-  <div class="extra" style="color:black;">
-    <h4>Como citar (<?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
-    <?php
+<!--  <div class="extra" style="color:black;">
+    <h4>Como citar (< ?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
+    < ?php
     $type = get_type($r['type']);
     $author_array = array();
     foreach ($r['authors'] as $autor_citation){
@@ -407,7 +407,7 @@
     $output = $citeproc->render($data, $mode);
     print_r($output)
     ?>
-  </div>
+  </div> -->
   </div>
   </div>
 <?php endforeach;?>
