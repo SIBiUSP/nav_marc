@@ -3,6 +3,29 @@
 
   include 'inc/config.php';
   include 'inc/header.php';
+  include_once 'inc/functions.php';
+
+  if (empty($_SESSION["citation_style"])) {
+    $_SESSION["citation_style"]="abnt";
+  }
+  if (isset($_POST["citation_style"])) {
+    $_SESSION["citation_style"] = $_POST['citation_style'];
+  }
+
+
+  /* Pegar a URL atual */
+  if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
+      $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  } else {
+      $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
+  }
+
+  /* Citeproc-PHP*/
+  include 'inc/citeproc-php/CiteProc.php';
+  $csl = file_get_contents('inc/citeproc-php/style/'.$_SESSION["citation_style"].'.csl');
+  $lang = "br";
+  $citeproc = new citeproc($csl,$lang);
+  $mode = "reference";
 
   #Consultas
   $query = json_decode('[{"$match":{"_id":"'.$_GET["_id"].'"}},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "files"}}]');
@@ -13,6 +36,106 @@
 <div class="ui container">
   <div class="ui main two column stackable grid">
     <div class="four wide column">
+      <h3> Escolha o estilo da Citação:</h3>
+      <div class="ui compact menu">
+        <form method="post" action="http://<?php echo $url; ?>">
+          <button  type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
+        </form>
+        <form method="post" action="http://<?php echo $url; ?>">
+          <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
+        </form>
+        <form method="post" action="http://<?php echo $url; ?>">
+          <button type="submit" name="citation_style" class="ui icon button" value="nlm">NLM</button>
+        </form>
+        <form method="post" action="http://<?php echo $url; ?>">
+          <button type="submit" name="citation_style" class="ui icon button" value="vancouver">Vancouver</button>
+        </form>
+      </div>
+
+      <div class="extra" style="color:black;">
+        <h4>Como citar (<?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
+        <?php
+        $type = get_type($cursor["result"][0]["type"]);
+        $author_array = array();
+        foreach ($cursor["result"][0]["authors"] as $autor_citation){
+
+          $array_authors = explode(',', $autor_citation);
+          $author_array[] = '{"family":"'.$array_authors[0].'","given":"'.$array_authors[1].'"}';
+        };
+        $authors = implode(",",$author_array);
+
+        if (!empty($cursor["result"][0]["ispartof"])) {
+          $container = '"container-title": "'.$cursor["result"][0]["ispartof"].'",';
+        } else {
+          $container = "";
+        };
+        if (!empty($cursor["result"][0]["doi"])) {
+          $doi = '"DOI": "'.$cursor["result"][0]["doi"][0].'",';
+        } else {
+          $doi = "";
+        };
+
+        if (!empty($cursor["result"][0]["url"])) {
+          $url = '"URL": "'.$cursor["result"][0]["url"][0].'",';
+        } else {
+          $url = "";
+        };
+
+        if (!empty($cursor["result"][0]["publisher"])) {
+          $publisher = '"publisher": "'.$cursor["result"][0]["publisher"].'",';
+        } else {
+          $publisher = "";
+        };
+
+        if (!empty($cursor["result"][0]["publisher-place"])) {
+          $publisher_place = '"publisher-place": "'.$cursor["result"][0]["publisher-place"].'",';
+        } else {
+          $publisher_place = "";
+        };
+
+        $volume = "";
+        $issue = "";
+        $page_ispartof = "";
+
+        if (!empty($cursor["result"][0]["ispartof_data"])) {
+          foreach ($cursor["result"][0]["ispartof_data"] as $ispartof_data) {
+            if (strpos($ispartof_data, 'v.') !== false) {
+              $volume = '"volume": "'.str_replace("v.","",$ispartof_data).'",';
+            } elseif (strpos($ispartof_data, 'n.') !== false) {
+              $issue = '"issue": "'.str_replace("n.","",$ispartof_data).'",';
+            } elseif (strpos($ispartof_data, 'p.') !== false) {
+              $page_ispartof = '"page": "'.str_replace("p.","",$ispartof_data).'",';
+            }
+          }
+        }
+
+        $data = json_decode('{
+                    "title": "'.$cursor["result"][0]["title"].'",
+                    "type": "'.$type.'",
+                    '.$container.'
+                    '.$doi.'
+                    '.$url.'
+                    '.$publisher.'
+                    '.$publisher_place.'
+                    '.$volume.'
+                    '.$issue.'
+                    '.$page_ispartof.'
+                    "issued": {
+                        "date-parts": [
+                            [
+                                "'.$cursor["result"][0]["year"].'"
+                            ]
+                        ]
+                    },
+                    "author": [
+                        '.$authors.'
+                    ]
+                }');
+        $output = $citeproc->render($data, $mode);
+        print_r($output)
+        ?>
+      </div>
+
       <h3>Exportar</h3>
     </div>
     <div class="ten wide column">
@@ -40,6 +163,23 @@
             <?php endforeach;?>
           <?php endif; ?>
         </div>
+
+
+        <!--Authors USP -->
+        <div class="ui middle aligned selection list">
+          <?php if (!empty($cursor["result"][0]['authorUSP'])): ?>
+            <h4>Autor(es) USP:</h4>
+            <?php foreach ($cursor["result"][0]['authorUSP'] as $autoresUSP): ?>
+              <div class="item">
+                <i class="user icon"></i>
+                <div class="content">
+                  <a href="result.php?authorUSP=<?php echo $autoresUSP;?>"><?php echo $autoresUSP;?></a>
+                  </div>
+                </div>
+            <?php endforeach;?>
+          <?php endif; ?>
+        </div>
+
         <!--Unidades USP -->
         <div class="ui middle aligned selection list">
           <?php if (!empty($cursor["result"][0]['unidadeUSP'])): ?>
@@ -68,6 +208,67 @@
             <?php endforeach;?>
           <?php endif; ?>
         </div>
+        <!-- Idioma -->
+        <div class="ui middle aligned selection list">
+          <?php if (!empty($cursor["result"][0]['language'])): ?>
+            <h4>Idioma:</h4>
+            <?php foreach ($cursor["result"][0]['language'] as $language): ?>
+              <div class="item">
+                <i class="user icon"></i>
+                <div class="content">
+                  <a href="result.php?language=<?php echo $language;?>"><?php echo $language;?></a>
+                  </div>
+                </div>
+            <?php endforeach;?>
+          <?php endif; ?>
+        </div>
+        <!-- Imprenta -->
+        <div class="ui middle aligned selection list">
+          <?php if (!empty($cursor["result"][0]['publisher-place'])): ?>
+            <h4>Imprenta:</h4>
+              <div class="item">
+                <i class="user icon"></i>
+                <div class="content">
+                  Local: <a href="result.php?publisher-place=<?php echo $cursor["result"][0]['publisher-place'];?>"><?php echo $cursor["result"][0]['publisher-place'];?></a>
+                  </div>
+                </div>
+                <div class="item">
+                  <i class="user icon"></i>
+                  <div class="content">
+                    Data de publicação: <a href="result.php?year=<?php echo $cursor["result"][0]['year'];?>"><?php echo $cursor["result"][0]['year'];?></a>
+                    </div>
+                  </div>
+          <?php endif; ?>
+        </div>
+
+        <!-- Fonte -->
+        <div class="ui middle aligned selection list">
+          <?php if (!empty($cursor["result"][0]['ispartof'])): ?>
+            <h4>Fonte:</h4>
+              <div class="item">
+                <i class="user icon"></i>
+                <div class="content">
+                  Título: <a href="result.php?ispartof=<?php echo $cursor["result"][0]['ispartof'];?>"><?php echo $cursor["result"][0]['ispartof'];?></a><br/>
+                  ISSN: <a href="result.php?issn_part=<?php echo $cursor["result"][0]['issn_part'][0];?>"><?php echo $cursor["result"][0]['issn_part'][0];?></a><br/>
+                  Volume: <?php echo $cursor["result"][0]['ispartof_data'][0];?><br/>
+                  Número: <?php echo $cursor["result"][0]['ispartof_data'][1];?><br/>
+                  Paginação: <?php echo $cursor["result"][0]['ispartof_data'][2];?><br/>
+                  DOI: <a href="http://dx.doi.org/<?php echo $cursor["result"][0]['doi'][0];?>"><?php echo $cursor["result"][0]['doi'][0];?></a><br/>
+                  </div>
+                </div>
+          <?php endif; ?>
+        </div>
+
+        <?php if (!empty($cursor["result"][0]['doi'])): ?>
+          <br/><br/>
+          <a href="http://dx.doi.org/<?php echo $cursor["result"][0]['doi'][0];?>">
+          <div class="ui right floated primary button">
+            Acesso online
+            <i class="right chevron icon"></i>
+          </div></a>
+          <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $cursor["result"][0]['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
+        <?php endif; ?>
+
       </div>
       <div class="ui bottom attached tab segment" data-tab="second">
         <table class="ui celled table">
