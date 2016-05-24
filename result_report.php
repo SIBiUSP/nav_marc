@@ -130,7 +130,7 @@
 
     <div class="ui vertical stripe segment">
     <div class="ui text container">
-    <h3 class="ui header">Alguns números</h3><br/><br/>
+    <h3 class="ui header">Total</h3><br/><br/>
     <div class="ui one statistics">
       <div class="statistic">
         <div class="value">
