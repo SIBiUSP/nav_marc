@@ -323,8 +323,8 @@ include_once 'inc/functions.php';
 
 
 
-    <div class="page-header"><h3>Resultado da busca: <?php print_r($total);?> Registros</h3></div>
-
+    <div><h3>Resultado da busca: <?php print_r($total);?> Registros</h3></div>
+<br/>
   <?php
   /* Pagination - Start */
   echo '<div class="ui buttons">';
