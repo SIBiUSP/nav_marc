@@ -265,6 +265,7 @@ include_once 'inc/functions.php';
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
         if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
             generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
+            generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
         }
         if ($_SESSION['login_role'] == 'admin'){
         generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
@@ -275,7 +276,6 @@ include_once 'inc/functions.php';
         generateFacet($url, $c, $query, '$colab_instituicao_corrigido', 'count', -1, 'Colaboração - Instituição - Corrigido', 100);
         generateFacet($url, $c, $query, '$colab_instituicao_naocorrigido', 'count', -1, 'Colaboração - Instituição - Não corrigido', 100);
         generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
-        generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
         generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
         generateFacet($url, $c, $query, '$indexado', 'count', -1, 'Indexado em:', 50);
