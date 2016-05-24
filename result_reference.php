@@ -323,7 +323,7 @@ include_once 'inc/functions.php';
 
 
 
-    <div class="page-header"><h3>Resultado da busca <small><?php print_r($total);?></small></h3></div>
+    <div class="page-header"><h3>Resultado da busca: <?php print_r($total);?> Registros</h3></div>
 
   <?php
   /* Pagination - Start */
