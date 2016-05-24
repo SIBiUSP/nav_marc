@@ -94,6 +94,30 @@
     }
 </style>
 
+<style type="text/css">
+.axis path, .axis line
+{
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+
+.axis text
+{
+    font-family: 'Arial';
+    font-size: 8px;
+}
+.tick
+{
+    stroke-dasharray: 1, 2;
+}
+.bar
+{
+    fill: FireBrick;
+}
+
+</style>
+
 </head>
 <body>
   <div class="ui main container">
@@ -102,221 +126,371 @@
       <?php echo $filters;?>
     <?php endforeach;?>
     </h3><br/><br/>
-    <div class="ui equal width grid">
-      <div class="column">
-      <h3>Tipo de publicação</h3>
-      <?php $type_mat = generateDataGraph($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
-      <div id="chart"></div>
-      <script type="text/javascript">
-      var w = 400;
-      var h = 400;
-      var r = h/2;
-      var color = d3.scale.category20c();
-
-      var data = [<?= $type_mat; ?>];
 
 
-      var vis = d3.select('#chart').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
-      var pie = d3.layout.pie().value(function(d){return d.value;});
-
-      // declare an arc generator function
-      var arc = d3.svg.arc().outerRadius(r);
-
-      // select paths, use arc generator to draw
-      var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-      arcs.append("svg:path")
-          .attr("fill", function(d, i){
-              return color(i);
-          })
-          .attr("d", function (d) {
-              // log the result of the arc generator to show how cool it is :)
-              console.log(arc(d));
-              return arc(d);
-          });
-
-      // add the text
-      arcs.append("svg:text").attr("transform", function(d){
-      			d.innerRadius = 0;
-      			d.outerRadius = r;
-          return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
-          return data[i].label;}
-      		);
-     </script>
-    </div>
-
-    <div class="column">
-      <h3>Unidade USP - Participações</h3>
-      <?php $unidadeUSP_part = generateDataGraph($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
-      <div id="chart2"></div>
-      <script type="text/javascript">
-      var w = 400;
-      var h = 400;
-      var r = h/2;
-      var color = d3.scale.category20c();
-
-      var data = [<?= $unidadeUSP_part; ?>];
-
-
-      var vis = d3.select('#chart2').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
-      var pie = d3.layout.pie().value(function(d){return d.value;});
-
-      // declare an arc generator function
-      var arc = d3.svg.arc().outerRadius(r);
-
-      // select paths, use arc generator to draw
-      var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-      arcs.append("svg:path")
-          .attr("fill", function(d, i){
-              return color(i);
-          })
-          .attr("d", function (d) {
-              // log the result of the arc generator to show how cool it is :)
-              console.log(arc(d));
-              return arc(d);
-          });
-
-      // add the text
-      arcs.append("svg:text").attr("transform", function(d){
-            d.innerRadius = 0;
-            d.outerRadius = r;
-          return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
-          return data[i].label;}
-          );
-     </script>
-    </div>
-    </div>
-    <div class="ui equal width grid">
-      <div class="column">
-        <h3>Unidade USP - Trabalhos</h3>
-        <?php $unidadeUSP_part = generateDataGraph($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
-        <div id="chart3"></div>
-        <script type="text/javascript">
-        var w = 400;
-        var h = 400;
-        var r = h/2;
-        var color = d3.scale.category20c();
-
-        var data = [<?= $unidadeUSP_part; ?>];
-
-
-        var vis = d3.select('#chart3').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
-        var pie = d3.layout.pie().value(function(d){return d.value;});
-
-        // declare an arc generator function
-        var arc = d3.svg.arc().outerRadius(r);
-
-        // select paths, use arc generator to draw
-        var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-        arcs.append("svg:path")
-            .attr("fill", function(d, i){
-                return color(i);
-            })
-            .attr("d", function (d) {
-                // log the result of the arc generator to show how cool it is :)
-                console.log(arc(d));
-                return arc(d);
-            });
-
-        // add the text
-        arcs.append("svg:text").attr("transform", function(d){
-              d.innerRadius = 0;
-              d.outerRadius = r;
-            return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
-            return data[i].label;}
-            );
-       </script>
-      </div>
-      <div class="column">
-        <h3>Departamento - Participações</h3>
-        <?php $unidadeUSP_part = generateDataGraph($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
-        <div id="chart4"></div>
-        <script type="text/javascript">
-        var w = 400;
-        var h = 400;
-        var r = h/2;
-        var color = d3.scale.category20c();
-
-        var data = [<?= $unidadeUSP_part; ?>];
-
-
-        var vis = d3.select('#chart4').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
-        var pie = d3.layout.pie().value(function(d){return d.value;});
-
-        // declare an arc generator function
-        var arc = d3.svg.arc().outerRadius(r);
-
-        // select paths, use arc generator to draw
-        var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-        arcs.append("svg:path")
-            .attr("fill", function(d, i){
-                return color(i);
-            })
-            .attr("d", function (d) {
-                // log the result of the arc generator to show how cool it is :)
-                console.log(arc(d));
-                return arc(d);
-            });
-
-        // add the text
-        arcs.append("svg:text").attr("transform", function(d){
-              d.innerRadius = 0;
-              d.outerRadius = r;
-            return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
-            return data[i].label;}
-            );
-       </script>
-      </div>
-    </div>
-
-  <div class="ui main two column stackable grid">
-    <div class="four wide column">
-      <div class="ui fluid vertical accordion menu">
-        <div class="item">
-          <a class="active title">
-            <i class="dropdown icon"></i>
-            Filtros ativos
-          </a>
-          <div class="active content">
-            <div class="ui form">
-              <div class="grouped fields">
-                <?php foreach ($_GET as $filters): ?>
-                    <div class="field">
-                    <div class="ui checkbox">
-                      <input type="checkbox" name="<?php echo $filters;?>">
-                    <label><?php echo $filters;?></label>
-                    </div>
-                </div>
-                <?php endforeach;?>
-              </div>
-            </div>
-          </div>
+    <div class="ui vertical stripe segment">
+    <div class="ui text container">
+    <h3 class="ui header">Alguns números</h3><br/><br/>
+    <div class="ui one statistics">
+      <div class="statistic">
+        <div class="value">
+          <i class="file icon"></i> <?php echo $total; ?>
         </div>
-      <?php
-      /* Gerar facetas */
-        generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50);
-        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 100);
-        generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 100);
-        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 50);
-        generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento - Trabalhos', 50);
-        generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
-        if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
-            generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
-        }
-        generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
-        generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
-        generateFacet($url, $c, $query, '$codpesbusca', 'count', -1, 'Número USP', 50);
-        generateFacet($url, $c, $query, '$codpes', 'count', -1, 'Número USP / Unidade', 50);
-        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
-        generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
-        generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
-        generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
-        generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
-        generateFacet($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50);
-        generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
-      ?>
+        <div class="label">
+          Quantidade de registros
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+    </div>
+    </div>
+
+
+<h3>Tipo de publicação</h3>
+<svg id="mat_type" width="1000" height="500"></svg>
+<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
+
+<script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [<?= $type_mat_bar; ?>];
+
+  var vis = d3.select('#mat_type'),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+</script>
+
+<?php generateDataTable($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
+
+<h3>Unidade USP - Participações</h3>
+<svg id="unidadeUSP_part_bar" width="1000" height="500"></svg>
+<?php $unidadeUSP_part_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+
+<script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [<?= $unidadeUSP_part_bar; ?>];
+
+  var vis = d3.select('#unidadeUSP_part_bar'),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+</script>
+
+<?php generateDataTable($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+
+
+<h3>Unidade USP - Trabalhos</h3>
+<svg id="unidadeUSP_trab_bar" width="1000" height="500"></svg>
+<?php $unidadeUSP_trab_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+
+<script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [<?= $unidadeUSP_trab_bar; ?>];
+
+  var vis = d3.select('#unidadeUSP_trab_bar'),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+</script>
+
+<?php generateDataTable($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+
+
+<h3>Departamento - Participações</h3>
+<svg id="departamento_part_bar" width="1000" height="500"></svg>
+<?php $departamento_part_bar = generateDataGraphBar($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+
+<script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [<?= $departamento_part_bar; ?>];
+
+  var vis = d3.select('#departamento_part_bar'),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+</script>
+
+<?php generateDataTable($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+
+
+
+
+
+
+    <?php generateDataTable($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50); ?>
+    <?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50); ?>
+    <?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50); ?>
+    <?php generateDataTable($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50); ?>
+    <?php generateDataTable($url, $c, $query, '$language', 'count', -1, 'Idioma', 50); ?>
+    <?php generateDataTable($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50); ?>
+    <?php generateDataTable($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50); ?>
+
+
+    </div>
+
 </div>
 <?php
   include 'inc/footer.php';

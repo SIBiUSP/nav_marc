@@ -86,6 +86,9 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
         }
     };
     echo '</div></div>';
+
+
+
 };
 
 
@@ -227,5 +230,99 @@ function generateDataGraph($url, $c, $query, $facet_name, $sort_name, $sort_valu
     return $comma_separated;
 
 };
+
+/* Function to generate Tables */
+function generateDataTable($url, $c, $query, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit)
+{
+    $aggregate_facet = array(
+    array(
+      '$match' => $query,
+    ),
+    array(
+      '$unwind' => $facet_name,
+    ),
+    array(
+      '$group' => array(
+        '_id' => $facet_name,
+        'count' => array('$sum' => 1),
+        ),
+    ),
+    array(
+      '$sort' => array($sort_name => $sort_value),
+    ),
+  );
+    $options = array('allowDiskUse' => true);
+    $facet = $c->aggregate($aggregate_facet, $options);
+
+
+
+echo "<table class=\"ui celled table\">
+  <thead>
+    <tr>
+      <th>".$facet_display_name."</th>
+      <th>Quantidade</th>
+    </tr>
+  </thead>
+  <tbody>";
+
+
+    foreach ($facet['result'] as $facets) {
+        echo "<tr>
+              <td>".$facets['_id']."</td>
+              <td>".$facets['count']."</td>
+            </tr>";
+    };
+
+  echo"</tbody>
+    </table>";
+
+
+};
+
+/* Function to generate Graph Bar */
+function generateDataGraphBar($url, $c, $query, $facet_name, $sort_name, $sort_value, $facet_display_name, $limit)
+{
+    $aggregate_facet = array(
+    array(
+      '$match' => $query,
+    ),
+    array(
+      '$unwind' => $facet_name,
+    ),
+    array(
+      '$group' => array(
+        '_id' => $facet_name,
+        'count' => array('$sum' => 1),
+        ),
+    ),
+    array(
+      '$sort' => array($sort_name => $sort_value),
+    ),
+  );
+    $options = array('allowDiskUse' => true);
+    $facet = $c->aggregate($aggregate_facet, $options);
+
+
+    $i = 0;
+    $data_array= array();
+    foreach ($facet['result'] as $facets) {
+        array_push($data_array,'{"x":"'.$facets['_id'].'","y":'.$facets['count'].'}');
+        if (++$i > $limit) {
+            break;
+        }
+    };
+    $comma_separated = implode(",", $data_array);
+    return $comma_separated;
+
+};
+
+/* Conta os registros */
+
+function countRecords($c) {
+  $query_count = json_decode('[{"$group":{"_id":null,"count":{"$sum": 1}}}]');
+  $total_count = $c->aggregate($query_count);
+  $total = $total_count['result'][0]['count'];
+  return $total;
+}
 
 ?>

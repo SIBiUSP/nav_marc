@@ -34,6 +34,22 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
         </form>
         </div>
     </div>
+    <?php $total_registros = countRecords($c); ?>
+    <div class="ui vertical stripe segment">
+    <div class="ui text container">
+    <h3 class="ui header">Alguns números</h3><br/><br/>
+    <div class="ui one statistics">
+      <div class="statistic">
+        <div class="value">
+          <i class="file icon"></i> <?php echo $total_registros; ?>
+        </div>
+        <div class="label">
+          Quantidade de registros
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
     <?php get_last_records($c,15); ?>
   </div>
   <div class="six wide column">
