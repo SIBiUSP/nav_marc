@@ -216,7 +216,7 @@
         <text variable="container-title" font-style="italic"/>
       </else-if>
       <else>
-        <text variable="container-title" font-style="italic"/>
+        <text variable="container-title" font-weight="bold" font-style="italic"/>
       </else>
     </choose>
   </macro>
