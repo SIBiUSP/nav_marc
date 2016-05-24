@@ -36,105 +36,6 @@
 <div class="ui container">
   <div class="ui main two column stackable grid">
     <div class="four wide column">
-      <h3> Escolha o estilo da Citação:</h3>
-      <div class="ui compact menu">
-        <form method="post" action="http://<?php echo $url; ?>">
-          <button  type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
-        </form>
-        <form method="post" action="http://<?php echo $url; ?>">
-          <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
-        </form>
-        <form method="post" action="http://<?php echo $url; ?>">
-          <button type="submit" name="citation_style" class="ui icon button" value="nlm">NLM</button>
-        </form>
-        <form method="post" action="http://<?php echo $url; ?>">
-          <button type="submit" name="citation_style" class="ui icon button" value="vancouver">Vancouver</button>
-        </form>
-      </div>
-
-      <div class="extra" style="color:black;">
-        <h4>Como citar (<?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
-        <?php
-        $type = get_type($cursor["result"][0]["type"]);
-        $author_array = array();
-        foreach ($cursor["result"][0]["authors"] as $autor_citation){
-
-          $array_authors = explode(',', $autor_citation);
-          $author_array[] = '{"family":"'.$array_authors[0].'","given":"'.$array_authors[1].'"}';
-        };
-        $authors = implode(",",$author_array);
-
-        if (!empty($cursor["result"][0]["ispartof"])) {
-          $container = '"container-title": "'.$cursor["result"][0]["ispartof"].'",';
-        } else {
-          $container = "";
-        };
-        if (!empty($cursor["result"][0]["doi"])) {
-          $doi = '"DOI": "'.$cursor["result"][0]["doi"][0].'",';
-        } else {
-          $doi = "";
-        };
-
-        if (!empty($cursor["result"][0]["url"])) {
-          $url = '"URL": "'.$cursor["result"][0]["url"][0].'",';
-        } else {
-          $url = "";
-        };
-
-        if (!empty($cursor["result"][0]["publisher"])) {
-          $publisher = '"publisher": "'.$cursor["result"][0]["publisher"].'",';
-        } else {
-          $publisher = "";
-        };
-
-        if (!empty($cursor["result"][0]["publisher-place"])) {
-          $publisher_place = '"publisher-place": "'.$cursor["result"][0]["publisher-place"].'",';
-        } else {
-          $publisher_place = "";
-        };
-
-        $volume = "";
-        $issue = "";
-        $page_ispartof = "";
-
-        if (!empty($cursor["result"][0]["ispartof_data"])) {
-          foreach ($cursor["result"][0]["ispartof_data"] as $ispartof_data) {
-            if (strpos($ispartof_data, 'v.') !== false) {
-              $volume = '"volume": "'.str_replace("v.","",$ispartof_data).'",';
-            } elseif (strpos($ispartof_data, 'n.') !== false) {
-              $issue = '"issue": "'.str_replace("n.","",$ispartof_data).'",';
-            } elseif (strpos($ispartof_data, 'p.') !== false) {
-              $page_ispartof = '"page": "'.str_replace("p.","",$ispartof_data).'",';
-            }
-          }
-        }
-
-        $data = json_decode('{
-                    "title": "'.$cursor["result"][0]["title"].'",
-                    "type": "'.$type.'",
-                    '.$container.'
-                    '.$doi.'
-                    '.$url.'
-                    '.$publisher.'
-                    '.$publisher_place.'
-                    '.$volume.'
-                    '.$issue.'
-                    '.$page_ispartof.'
-                    "issued": {
-                        "date-parts": [
-                            [
-                                "'.$cursor["result"][0]["year"].'"
-                            ]
-                        ]
-                    },
-                    "author": [
-                        '.$authors.'
-                    ]
-                }');
-        $output = $citeproc->render($data, $mode);
-        print_r($output)
-        ?>
-      </div>
       <br/><br/><br/><h3>Ver registro no DEDALUS</h3>
       <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $cursor["result"][0]["_id"];?>">Ver no Dedalus</a>
 
@@ -270,6 +171,106 @@
           </div></a>
           <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $cursor["result"][0]['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
         <?php endif; ?>
+
+        <h3> Escolha o estilo da Citação:</h3>
+        <div class="ui compact menu">
+          <form method="post" action="http://<?php echo $url; ?>">
+            <button  type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
+          </form>
+          <form method="post" action="http://<?php echo $url; ?>">
+            <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
+          </form>
+          <form method="post" action="http://<?php echo $url; ?>">
+            <button type="submit" name="citation_style" class="ui icon button" value="nlm">NLM</button>
+          </form>
+          <form method="post" action="http://<?php echo $url; ?>">
+            <button type="submit" name="citation_style" class="ui icon button" value="vancouver">Vancouver</button>
+          </form>
+        </div>
+<br/><br/>
+        <div class="extra" style="color:black;">
+          <h4>Como citar (<?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
+          <?php
+          $type = get_type($cursor["result"][0]["type"]);
+          $author_array = array();
+          foreach ($cursor["result"][0]["authors"] as $autor_citation){
+
+            $array_authors = explode(',', $autor_citation);
+            $author_array[] = '{"family":"'.$array_authors[0].'","given":"'.$array_authors[1].'"}';
+          };
+          $authors = implode(",",$author_array);
+
+          if (!empty($cursor["result"][0]["ispartof"])) {
+            $container = '"container-title": "'.$cursor["result"][0]["ispartof"].'",';
+          } else {
+            $container = "";
+          };
+          if (!empty($cursor["result"][0]["doi"])) {
+            $doi = '"DOI": "'.$cursor["result"][0]["doi"][0].'",';
+          } else {
+            $doi = "";
+          };
+
+          if (!empty($cursor["result"][0]["url"])) {
+            $url = '"URL": "'.$cursor["result"][0]["url"][0].'",';
+          } else {
+            $url = "";
+          };
+
+          if (!empty($cursor["result"][0]["publisher"])) {
+            $publisher = '"publisher": "'.$cursor["result"][0]["publisher"].'",';
+          } else {
+            $publisher = "";
+          };
+
+          if (!empty($cursor["result"][0]["publisher-place"])) {
+            $publisher_place = '"publisher-place": "'.$cursor["result"][0]["publisher-place"].'",';
+          } else {
+            $publisher_place = "";
+          };
+
+          $volume = "";
+          $issue = "";
+          $page_ispartof = "";
+
+          if (!empty($cursor["result"][0]["ispartof_data"])) {
+            foreach ($cursor["result"][0]["ispartof_data"] as $ispartof_data) {
+              if (strpos($ispartof_data, 'v.') !== false) {
+                $volume = '"volume": "'.str_replace("v.","",$ispartof_data).'",';
+              } elseif (strpos($ispartof_data, 'n.') !== false) {
+                $issue = '"issue": "'.str_replace("n.","",$ispartof_data).'",';
+              } elseif (strpos($ispartof_data, 'p.') !== false) {
+                $page_ispartof = '"page": "'.str_replace("p.","",$ispartof_data).'",';
+              }
+            }
+          }
+
+          $data = json_decode('{
+                      "title": "'.$cursor["result"][0]["title"].'",
+                      "type": "'.$type.'",
+                      '.$container.'
+                      '.$doi.'
+                      '.$url.'
+                      '.$publisher.'
+                      '.$publisher_place.'
+                      '.$volume.'
+                      '.$issue.'
+                      '.$page_ispartof.'
+                      "issued": {
+                          "date-parts": [
+                              [
+                                  "'.$cursor["result"][0]["year"].'"
+                              ]
+                          ]
+                      },
+                      "author": [
+                          '.$authors.'
+                      ]
+                  }');
+          $output = $citeproc->render($data, $mode);
+          print_r($output)
+          ?>
+        </div>
 
       </div>
       <div class="ui bottom attached tab segment" data-tab="second">

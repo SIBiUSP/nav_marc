@@ -161,7 +161,7 @@
         <date variable="accessed" prefix=". Acesso em: ">
           <date-part name="day" suffix=" "/>
           <date-part name="month" form="short" suffix=" " text-case="lowercase"/>
-          <date-part name="year"/>
+          <date-part prefix=" " name="year"/>
         </date>
       </if>
       <else>
@@ -169,7 +169,7 @@
         <date variable="accessed" prefix=". Acesso em: ">
           <date-part name="day" suffix=" "/>
           <date-part name="month" form="short" suffix=" " text-case="lowercase"/>
-          <date-part name="year"/>
+          <date-part prefix=" " name="year"/>
         </date>
       </else>
     </choose>
@@ -183,7 +183,7 @@
           <date variable="accessed" suffix=", ">
             <date-part name="month" suffix=" "/>
             <date-part name="day" suffix=", "/>
-            <date-part name="year"/>
+            <date-part prefix=" " name="year"/>
           </date>
           <group>
             <text term="from" suffix=" "/>
@@ -263,7 +263,7 @@
             </if>
           </choose>
           <date variable="issued">
-            <date-part name="year"/>
+            <date-part prefix=" " name="year" suffix="."/>
           </date>
         </group>
       </if>
@@ -277,7 +277,7 @@
     <choose>
       <if variable="issued" match="any">
         <date variable="issued">
-          <date-part name="year"/>
+          <date-part prefix=" " name="year" suffix="."/>
         </date>
       </if>
       <else>
