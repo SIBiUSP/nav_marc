@@ -236,7 +236,7 @@ include_once 'inc/functions.php';
           <div class="active content">
             <div class="ui form">
               <div class="grouped fields">
-                <form method="get" action="result.php">
+                <form method="get" action="result_reference.php">
                 <?php foreach ($_GET as $key=>$value): ?>
                     <div class="field">
                     <div class="ui checkbox">
@@ -318,12 +318,6 @@ include_once 'inc/functions.php';
     </form>
     <br/><br/>
 
-    <div>
-      <form method="post" action="result_report.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-        <button type="submit" name="page" class="ui icon button" value="<?php echo $escaped_url;?>">Gerar relatório</button>
-      </form>
-      <br/><br/>
-    </div>
   </div>
   <div class="twelve wide column">
 
