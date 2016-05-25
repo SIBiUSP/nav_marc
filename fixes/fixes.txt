@@ -112,8 +112,10 @@ uniq(departamentotrabalhos)
    end
 #Pegar data do CAT
 marc_map('CATc','dataregistro.$append')
+substring("dataregistro.*",0,6)
 sort_field("dataregistro", numeric:1)
-parse_text("dataregistro", '(\d\d\d\d)-(\d\d)')
+
+
 
 # Delete all the empty fields
 vacuum()
