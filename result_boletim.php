@@ -264,6 +264,9 @@ include_once 'inc/functions.php';
         generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento - Trabalhos', 50);
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
         generateFacet($url, $c, $query, '$dataregistro', '_id', -1, 'Data de cadastramento', 50);
+        generateFacet($url, $c, $query, '$areaconcentracao', 'count', -1, 'Área de concentração', 50);
+        generateFacet($url, $c, $query, '$fatorimpacto', '_id', -1, 'Fator de impacto', 50);
+        generateFacet($url, $c, $query, '$grupopesquisa', 'count', -1, 'Grupo de pesquisa', 50);
         if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
             generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
             generateFacet($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50);
@@ -449,14 +452,16 @@ include_once 'inc/functions.php';
     $output = $citeproc->render($data, $mode);
     print_r($output)
     ?>
+    <?php if (!empty($r['fatorimpacto'])) : ?>
+      <br/>
+    <?php echo "<b>Fator de impacto:</b> ".$r['fatorimpacto'][0]."";?>
+    <?php endif; ?>
   </div>
   </div>
   </div>
 <?php endforeach;?>
-<br/><br/>
-<?php if (!empty($r['url'])) : ?>
-<?php echo $r['fatorimpacto'][0];?>
-<?php endif; ?>
+
+
 
 </div>
 <?php
