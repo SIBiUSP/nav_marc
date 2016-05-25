@@ -36,3 +36,5 @@ mongoexport --db sibi --collection producao --fields _id,colab_instituicao_trab 
 
 
 mongoexport --db sibi --collection producao --fields _id,colab_instituicao_corrigido --query '{ colab_instituicao_corrigido: { $exists: true } }' --out ../data/colab_instituicao_corrigido.json
+
+mongoexport --db sibi --collection producao --fields _id,colab_instituicao_naocorrigido --query '{ colab_instituicao_naocorrigido: { $exists: true } }' --out ../data/colab_instituicao_naocorrigido.json

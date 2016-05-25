@@ -324,7 +324,7 @@ include_once 'inc/functions.php';
 
 
 
-    <div><h3>Resultado da busca: <?php print_r($total);?> Registros</h3></div>
+    <div><h3>Registros cadastrados: <?php print_r($total);?> Registros</h3></div>
 <br/>
   <?php
   /* Pagination - Start */
@@ -356,21 +356,7 @@ include_once 'inc/functions.php';
 
   <br/>  <br/>
 
-  <h3> Escolha o estilo da Citação:</h3>
-  <div class="ui compact menu">
-    <form method="post" action="result_reference.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-      <button  type="submit" name="citation_style" class="ui icon button" value="apa">APA</button>
-    </form>
-    <form method="post" action="result_reference.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-      <button type="submit" name="citation_style" class="ui icon button" value="abnt">ABNT</button>
-    </form>
-    <form method="post" action="result_reference.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-      <button type="submit" name="citation_style" class="ui icon button" value="nlm">NLM</button>
-    </form>
-    <form method="post" action="result_reference.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
-      <button type="submit" name="citation_style" class="ui icon button" value="vancouver">Vancouver</button>
-    </form>
-  </div>
+
 
   <h4>Referências (<?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>
 
