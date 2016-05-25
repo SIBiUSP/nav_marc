@@ -156,9 +156,11 @@
                 <div class="content">
                   Título: <a href="result.php?ispartof=<?php echo $cursor["result"][0]['ispartof'];?>"><?php echo $cursor["result"][0]['ispartof'];?></a><br/>
                   ISSN: <a href="result.php?issn_part=<?php echo $cursor["result"][0]['issn_part'][0];?>"><?php echo $cursor["result"][0]['issn_part'][0];?></a><br/>
+                  <?php if (!empty($cursor["result"][0]['ispartof_data'])): ?>
                   Volume: <?php echo $cursor["result"][0]['ispartof_data'][0];?><br/>
                   Número: <?php echo $cursor["result"][0]['ispartof_data'][1];?><br/>
                   Paginação: <?php echo $cursor["result"][0]['ispartof_data'][2];?><br/>
+                  <?php endif; ?>
                   <?php if (!empty($cursor["result"][0]['doi'])): ?>
                   DOI: <a href="http://dx.doi.org/<?php echo $cursor["result"][0]['doi'][0];?>"><?php echo $cursor["result"][0]['doi'][0];?></a><br/>
                   <?php endif; ?>
