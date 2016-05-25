@@ -43,6 +43,18 @@ if (!empty($cursor["result"][0]["doi"])) {
 $record[] = "DO  - ".$cursor["result"][0]["doi"][0]."";
 }
 
+if (!empty($cursor["result"][0]["url"])) {
+  $record[] = "UR  - ".$cursor["result"][0]["url"][0]."";
+}
+
+if (!empty($cursor["result"][0]["publisher-place"])) {
+  $record[] = "PP  - ".$cursor["result"][0]["publisher-place"]."";
+}
+
+if (!empty($cursor["result"][0]["publisher"])) {
+  $record[] = "PB  - ".$cursor["result"][0]["publisher"]."";
+}
+
 if (!empty($cursor["result"][0]["ispartof_data"])) {
   foreach ($cursor["result"][0]["ispartof_data"] as $ispartof_data) {
     if (strpos($ispartof_data, 'v.') !== false) {
@@ -54,7 +66,7 @@ if (!empty($cursor["result"][0]["ispartof_data"])) {
     }
   }
 }
-
+$record[] = "ER  - ";
 
 $record_blob = implode("\\n", $record);
 
