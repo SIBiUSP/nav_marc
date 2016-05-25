@@ -40,6 +40,9 @@
       <a class="ui blue label" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $cursor["result"][0]["_id"];?>">Ver no Dedalus</a>
 
       <h3>Exportar</h3>
+
+<a href="export_ris.php?_id=<?php echo $cursor["result"][0]["_id"];?>">RIS</a>
+
     </div>
     <div class="ten wide column">
       <h2 class="ui center aligned icon header">
