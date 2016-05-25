@@ -73,7 +73,7 @@ $record_blob = implode("\\n", $record);
 ?>
 
 
-<script src="inc/filesaver/FileSaver.min.js"></script>
+<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
 <script>
       function SaveAsFile(t,f,m) {
             try {
