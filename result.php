@@ -95,7 +95,13 @@
     $query_count = json_decode('[{"$match":'.$query_json.'},{"$group":{"_id":null,"count":{"$sum": 1}}}]');
     $cursor = $c->aggregate($query_new);
     $total_count = $c->aggregate($query_count);
-    $total = $total_count['result'][0]['count'];
+    $conta = count($total_count['result']);
+    if ($conta == 0) {
+      $total = 0;
+    } else {
+      $total = $total_count['result'][0]['count'];
+
+    }
 
 ?>
 <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
