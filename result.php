@@ -150,6 +150,10 @@
             generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         }
         if ($_SESSION['login_role'] == 'admin'){
+        generateFacet($url, $c, $query, '$dataregistro', '_id', -1, 'Data de cadastramento', 50);
+        generateFacet($url, $c, $query, '$areaconcentracao', 'count', -1, 'Área de concentração', 50);
+        generateFacet($url, $c, $query, '$fatorimpacto', '_id', -1, 'Fator de impacto', 50);
+        generateFacet($url, $c, $query, '$grupopesquisa', 'count', -1, 'Grupo de pesquisa', 50);
         generateFacet($url, $c, $query, '$colab', 'count', -1, 'País dos autores externos à USP', 50);
         generateFacet($url, $c, $query, '$colab_int', 'count', -1, 'Colaboração - Internacionalização - Participações', 50);
         generateFacet($url, $c, $query, '$colab_int_trab', 'count', -1, 'Colaboração - Internacionalização - Trabalhos', 50);

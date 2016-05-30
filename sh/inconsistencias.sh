@@ -6,4 +6,4 @@ db.producao.update({ internacionalizacao: { $exists: false }}, { $set: { "intern
 
 db.producao.update({ unidadeUSPtrabalhos: { $exists: false }}, { $addToSet: { "unidadeUSPtrabalhos": "Sem Unidade registrada" }}, false, true )
 
-db.producao.update({ subject: { $exists: false }}, { $set: { "subject": "Sem dados de internacionalização" }}, false, true )
+db.producao.update({ subject: { $exists: false }}, { $set: { "subject": "Sem assunto cadastrado" }}, false, true )
