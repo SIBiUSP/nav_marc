@@ -30,6 +30,17 @@
   #Consultas
   $query = json_decode('[{"$match":{"_id":"'.$_GET["_id"].'"}},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "files"}}]');
   $cursor = $c->aggregate($query);
+
+if (!empty($cursor["result"][0]["files"][0]["visitors"])) {
+  $f = $d->producao_bdpi;
+  $inc_visitors = array('$inc' => array("visitors" => 1));
+  $f->update(array("_id" => $_GET["_id"]),$inc_visitors);
+} else {
+  $f = $d->producao_bdpi;
+  $inc_visitors = array('$set' => array("visitors" => 1));
+  $f->update(array("_id" => $_GET["_id"]),$inc_visitors,array("upsert" => true));
+}
+
 ?>
 </head>
 <body>
@@ -41,8 +52,12 @@
 
       <h3>Exportar</h3>
 
-<a href="export_ris.php?_id=<?php echo $cursor["result"][0]["_id"];?>">RIS</a>
+      <a href="export_ris.php?_id=<?php echo $cursor["result"][0]["_id"];?>">RIS</a>
 
+
+      <?php if (!empty($cursor["result"][0]["files"][0]["visitors"])) : ?>
+      <h4>Visitas ao registro: <?php echo ''.$cursor["result"][0]["files"][0]["visitors"].''; ?></h4>
+      <?php endif; ?>
     </div>
     <div class="ten wide column">
       <h2 class="ui center aligned icon header">
