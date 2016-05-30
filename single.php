@@ -198,6 +198,8 @@ if (!empty($cursor["result"][0]["files"][0]["visitors"])) {
           <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $cursor["result"][0]['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
         <?php endif; ?>
 
+        <?php load_itens($cursor["result"][0]["_id"]); ?>
+
         <h3> Escolha o estilo da Citação:</h3>
         <div class="ui compact menu">
           <form method="post" action="http://<?php echo $url; ?>">

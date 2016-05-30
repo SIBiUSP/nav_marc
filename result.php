@@ -334,6 +334,8 @@
     </div></a>
     <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
   <?php endif; ?>
+
+  <?php load_itens($r['_id']); ?>
   </div>
 <!--  <div class="extra" style="color:black;">
     <h4>Como citar (< ?php echo strtoupper($_SESSION["citation_style"]); ?>)</h4>

@@ -325,4 +325,35 @@ function countRecords($c) {
   return $total;
 }
 
+/* Recupera os exemplares do DEDALUS */
+function load_itens ($sysno) {
+    $xml = simplexml_load_file('http://dedalus.usp.br/X?op=item-data&base=USP01&doc_number='.$sysno.'');
+    echo "<h3>Exemplares físicos disponíveis nas Bibliotecas</h3>
+    <table class=\"ui celled table\">
+            <thead>
+              <tr>
+                <th>Biblioteca</th>
+                <th>Código de barras</th>
+                <th>Status</th>
+                <th>Número de chamada</th>
+                <th>Emprestado?</th>
+                <th>Data provável de devolução</th>
+              </tr>
+            </thead>
+          <tbody>";
+  foreach ($xml->item as $item) {
+    echo '<tr>';
+    echo '<td>'.$item->{'sub-library'}.'</td>';
+    echo '<td>'.$item->{'barcode'}.'</td>';
+    echo '<td>'.$item->{'item-status'}.'</td>';
+    echo '<td>'.$item->{'call-no-1'}.'</td>';
+    echo '<td>'.$item->{'loan-status'}.'</td>';
+    echo '<td>'.$item->{'loan-due-date'}.'</td>';
+    echo '</tr>';
+  }
+  echo "</tbody></table>";
+}
+
+
+
 ?>
