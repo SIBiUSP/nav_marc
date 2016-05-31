@@ -45,6 +45,7 @@ marc_map('590d','areaconcentracao.$append')
 marc_map('590m','fatorimpacto.$append')
 # 590n - Grupo de pesquisa
 marc_map('590n','grupopesquisa.$append')
+split_field('language',';')
 
 
 # 650 - Assunto
@@ -98,6 +99,10 @@ marc_map('946be','codpes.$append',join:'/')
 marc_map('946b','codpesbusca.$append')
 # 946e - Unidade USP - Participações
 marc_map('946e','unidadeUSP.$append')
+replace_all("unidadeUSP.*","IFQSC-Q","IQSC")
+replace_all("unidadeUSP.*","IFQSC-F","IFSC")
+replace_all("unidadeUSP.*","ICMSC","ICMC")
+replace_all("unidadeUSP.*","CBM","CEBIMAR")
 # Unidade USP - Trabalhos
 copy_field("unidadeUSP","unidadeUSPtrabalhos")
 uniq(unidadeUSPtrabalhos)

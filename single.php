@@ -170,7 +170,9 @@ if (!empty($cursor["result"][0]["files"][0]["visitors"])) {
                 <i class="user icon"></i>
                 <div class="content">
                   Título: <a href="result.php?ispartof=<?php echo $cursor["result"][0]['ispartof'];?>"><?php echo $cursor["result"][0]['ispartof'];?></a><br/>
+                  <?php if (!empty($cursor["result"][0]['issn_part'])): ?>
                   ISSN: <a href="result.php?issn_part=<?php echo $cursor["result"][0]['issn_part'][0];?>"><?php echo $cursor["result"][0]['issn_part'][0];?></a><br/>
+                  <?php endif; ?>
                   <?php if (!empty($cursor["result"][0]['ispartof_data'][0])): ?>
                   Volume: <?php echo $cursor["result"][0]['ispartof_data'][0];?><br/>
                   <?php endif; ?>
