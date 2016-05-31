@@ -329,9 +329,9 @@ function countRecords($c) {
 function load_itens ($sysno) {
     $xml = simplexml_load_file('http://dedalus.usp.br/X?op=item-data&base=USP01&doc_number='.$sysno.'');
     if ($xml->error == "No associated items"){
-      
+
     } else {
-            echo "<h3>Exemplares físicos disponíveis nas Bibliotecas</h3>
+            echo "<h4>Exemplares físicos disponíveis nas Bibliotecas</h4>
             <table class=\"ui celled table\">
                     <thead>
                       <tr>
