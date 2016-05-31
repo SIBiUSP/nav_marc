@@ -338,10 +338,14 @@ function load_itens ($sysno) {
                         <th>Biblioteca</th>
                         <th>Código de barras</th>
                         <th>Status</th>
-                        <th>Número de chamada</th>
-                        <th>Emprestado?</th>
-                        <th>Data provável de devolução</th>
-                      </tr>
+                        <th>Número de chamada</th>";
+                        if ($xml->{'loan-status'} == "A"){
+                        echo "<th>Status</th>
+                        <th>Data provável de devolução</th>";
+                      } else {
+                        echo "<th>Status</th>";
+                      }
+                      echo "</tr>
                     </thead>
                   <tbody>";
           foreach ($xml->item as $item) {
@@ -350,8 +354,12 @@ function load_itens ($sysno) {
             echo '<td>'.$item->{'barcode'}.'</td>';
             echo '<td>'.$item->{'item-status'}.'</td>';
             echo '<td>'.$item->{'call-no-1'}.'</td>';
-            echo '<td>'.$item->{'loan-status'}.'</td>';
+            if ($item->{'loan-status'} == "A"){
+            echo '<td>Emprestado</td>';
             echo '<td>'.$item->{'loan-due-date'}.'</td>';
+          } else {
+            echo '<td>Disponível</td>';
+          }
             echo '</tr>';
           }
           echo "</tbody></table>";
