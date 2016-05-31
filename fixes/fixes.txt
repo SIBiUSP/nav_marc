@@ -50,6 +50,8 @@ split_field('language',';')
 
 # 650 - Assunto
 marc_map('650[ 7]a','subject.$append')
+# 651 - Assunto
+marc_map('651[ 7]a','subject.$append')
 # 700 - Autores
 marc_map('700a','authors.$append')
 # 7007 - Colaboração - Internacionalização
