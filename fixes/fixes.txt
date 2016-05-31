@@ -105,6 +105,7 @@ replace_all("unidadeUSP.*","IFQSC-Q","IQSC")
 replace_all("unidadeUSP.*","IFQSC-F","IFSC")
 replace_all("unidadeUSP.*","ICMSC","ICMC")
 replace_all("unidadeUSP.*","CBM","CEBIMAR")
+replace_all("unidadeUSP.*","HPRLLP","HRAC")
 # Unidade USP - Trabalhos
 copy_field("unidadeUSP","unidadeUSPtrabalhos")
 uniq(unidadeUSPtrabalhos)
