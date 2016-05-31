@@ -339,7 +339,7 @@ function load_itens ($sysno) {
                         <th>Código de barras</th>
                         <th>Status</th>
                         <th>Número de chamada</th>";
-                        if ($xml->{'loan-status'} == "A"){
+                        if ($xml->item->{'loan-status'} == "A"){
                         echo "<th>Status</th>
                         <th>Data provável de devolução</th>";
                       } else {
