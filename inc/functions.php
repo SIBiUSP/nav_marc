@@ -394,7 +394,7 @@ function generateCSV($url, $c, $query, $facet_name, $sort_name, $sort_value, $fa
     $i = 0;
     $data_array= array();
     foreach ($facet['result'] as $facets) {
-        array_push($data_array,''.$facets["_id"].';'.$facets["count"].'');
+        array_push($data_array,''.$facets["_id"].'\\t'.$facets["count"].'');
         if (++$i > $limit) {
             break;
         }
