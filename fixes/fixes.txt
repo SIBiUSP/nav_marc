@@ -115,10 +115,10 @@ marc_map('946eg','departamento.$append',join:'/')
 copy_field("departamento","departamentotrabalhos")
 uniq(departamentotrabalhos)
 #- Year cleanup
-   replace_all('year','^(?<=-)?0+','')
-   unless all_match('year','^-?([0-9]|[123456789][0-9]+)$')
-       remove_field('year')
-   end
+#   replace_all('year','^(?<=-)?0+','')
+#   unless all_match('year','^-?([0-9]|[123456789][0-9]+)$')
+#       remove_field('year')
+#   end
 #Pegar data do CAT
 marc_map('CATc','dataregistro.$append')
 substring("dataregistro.*",0,6)
