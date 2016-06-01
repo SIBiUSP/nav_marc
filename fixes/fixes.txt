@@ -44,8 +44,8 @@ marc_map('590d','areaconcentracao.$append')
 # 590m - Fator de impacto
 marc_map('590m','fatorimpacto.$append')
 # 590n - Grupo de pesquisa
-marc_map('590n','grupopesquisa.$append')
-split_field('language',';')
+marc_map('590n','grupopesquisa')
+split_field('grupopesquisa',';')
 
 
 # 650 - Assunto

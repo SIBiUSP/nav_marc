@@ -110,42 +110,51 @@
   <div class="ui main container">
   <div class="ui main two column stackable grid">
     <div class="four wide column">
-      <div class="ui fluid vertical accordion menu">
-        <div class="item">
-          <a class="active title">
-            <i class="dropdown icon"></i>
-            Filtros ativos
-          </a>
-          <div class="active content">
-            <div class="ui form">
-              <div class="grouped fields">
-                <form method="get" action="result.php">
-                <?php foreach ($_GET as $key=>$value): ?>
-                    <div class="field">
-                    <div class="ui checkbox">
-                      <input type="checkbox" checked="checked"  name="<?php echo $key; ?>" value="<?php echo $value; ?>">
-                    <label><?php echo $value; ?></label>
-                    </div>
-                </div>
-                <?php endforeach;?>
-                <button type="submit" class="ui icon button">Retirar filtros</button>
-              </form>
+      <div class="item">
+          Filtros ativos
+        <div class="active content">
+          <div class="ui form">
+            <div class="grouped fields">
+              <form method="get" action="result.php">
+              <?php foreach ($_GET as $key=>$value): ?>
+                  <div class="field">
+                  <div class="ui checkbox">
+                    <input type="checkbox" checked="checked"  name="<?php echo $key; ?>" value="<?php echo $value; ?>">
+                  <label><?php echo $value; ?></label>
+                  </div>
               </div>
+              <?php endforeach;?>
+              <button type="submit" class="ui icon button">Retirar filtros</button>
+            </form>
             </div>
           </div>
         </div>
+      </div>
+      <h3>Navegação</h3>
+      <div class="ui fluid vertical accordion menu">
       <?php
       /* Gerar facetas */
         generateFacet($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50);
-        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 100);
-        generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 100);
-        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 50);
-        generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento - Trabalhos', 50);
+        generateFacet($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP', 100);
+        generateFacet($url, $c, $query, '$departamentotrabalhos', 'count', -1, 'Departamento', 50);
         generateFacet($url, $c, $query, '$subject', 'count', -1, 'Assuntos', 50);
         if (strpos($_SERVER['REQUEST_URI'], 'unidadeUSPtrabalhos') !== false) {
             generateFacet($url, $c, $query, '$authors', 'count', -1, 'Autores', 50);
         }
-        generateFacet($url, $c, $query, '$dataregistro', '_id', -1, 'Data de cadastramento', 50);
+        generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
+        generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
+        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'Obra do qual a produção faz parte', 50);
+        generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
+        generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
+        ?>
+      </div>
+        <h3>Informações administrativas</h3>
+        <div class="ui fluid vertical accordion menu">
+        <?php
+        generateFacetFirst($url, $c, $query, '$dataregistro', 'dataregistro', '_id', -1, 'Data de cadastramento', 50);
+        generateFacet($url, $c, $query, '$dataregistro', '_id', -1, 'Alterações nos registros', 50);
+        generateFacet($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 100);
+        generateFacet($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 50);
         generateFacet($url, $c, $query, '$areaconcentracao', 'count', -1, 'Área de concentração', 50);
         generateFacet($url, $c, $query, '$fatorimpacto', '_id', -1, 'Fator de impacto', 50);
         generateFacet($url, $c, $query, '$grupopesquisa', 'count', -1, 'Grupo de pesquisa', 50);
@@ -162,12 +171,8 @@
         generateFacet($url, $c, $query, '$issn_part', 'count', -1, 'ISSN do todo', 50);
         generateFacet($url, $c, $query, '$indexado', 'count', -1, 'Indexado em:', 50);
         generateFacet($url, $c, $query, '$fomento', 'count', -1, 'Agência de fomento:', 50);
-        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50);
-        generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
-        generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
-        generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
         generateFacet($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50);
-        generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
+
       ?>
     </div>
 

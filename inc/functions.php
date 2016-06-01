@@ -135,6 +135,56 @@ function generateFacet($url, $c, $query, $facet_name, $sort_name, $sort_value, $
   </div>';
 };
 
+/* Function to generate facets */
+function generateFacetFirst($url, $c, $query, $facet_name, $sort_name_1, $sort_name_2, $sort_value, $facet_display_name, $limit)
+{
+    $aggregate_facet = array(
+    array(
+      '$match' => $query,
+    ),
+    array(
+      '$unwind' => $facet_name,
+    ),
+    array(
+      '$sort' => array($sort_name_1 => 1),
+    ),
+    array(
+      '$group' => array(
+        '_id' => '$_id',
+        'firstRecordDate' => array('$first' => $facet_name),
+        ),
+    ),
+    array(
+      '$group' => array(
+        '_id' => '$firstRecordDate',
+        'count' => array('$sum' => 1),
+        ),
+    ),
+    array(
+      '$sort' => array($sort_name_2 => $sort_value),
+    ),
+  );
+    $options = array('allowDiskUse' => true);
+    $facet = $c->aggregate($aggregate_facet, $options);
+
+    echo '<div class="item">';
+    echo '<a class="active title"><i class="dropdown icon"></i>'.$facet_display_name.'</a>';
+    echo '<div class="content">';
+    echo '<div class="ui list">';
+    $i = 0;
+    foreach ($facet['result'] as $facets) {
+        echo '<div class="item">';
+        echo '<a href="'.$url.'&'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a><span> ('.$facets['count'].')</span>';
+        echo '</div>';
+        if (++$i > $limit) {
+            break;
+        }
+    };
+    echo   '</div>
+      </div>
+  </div>';
+};
+
 
 /* Pegar o tipo de material */
 function get_type($material_type){
