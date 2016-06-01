@@ -87,6 +87,20 @@
 <script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?2.1.3"></script>
 <script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?2.1.3"></script>
 
+<!-- Save as javascript -->
+<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+<script>
+      function SaveAsFile(t,f,m) {
+            try {
+                var b = new Blob([t],{type:m});
+                saveAs(b, f);
+            } catch (e) {
+                window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
+            }
+        }
+</script>
+
+
 <style type="text/css">
     .slice text {
         font-size: 8pt;
@@ -227,6 +241,10 @@ function InitChart() {
 
 <?php generateDataTable($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
 
+<?php $csv_type = generateCSV($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 500); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_type; ?>','tipo_de_material.csv','text/plain;charset=utf-8')">Exportar csv</button>
+
+
 <h3>Unidade USP - Participações</h3>
 <svg id="unidadeUSP_part_bar" width="1000" height="500"></svg>
 <?php $unidadeUSP_part_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
@@ -308,6 +326,9 @@ function InitChart() {
 </script>
 
 <?php generateDataTable($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+<?php $csv_unidadeUSP = generateCSV($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_unidadeUSP; ?>','unidadeUSP_participacoes.csv','text/plain;charset=utf-8')">Exportar csv</button>
+
 
 
 <h3>Unidade USP - Trabalhos</h3>
