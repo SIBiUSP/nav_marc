@@ -40,8 +40,91 @@ if (!empty($cursor["result"][0]["files"][0]["visitors"])) {
   $inc_visitors = array('$set' => array("visitors" => 1));
   $f->update(array("_id" => $_GET["_id"]),$inc_visitors,array("upsert" => true));
 }
+?>
+<?php
+#Consultas
+$query_ris = json_decode('[{"$match":{"_id":"'.$_GET["_id"].'"}},{"$lookup":{"from": "producao_bdpi", "localField": "_id", "foreignField": "_id", "as": "files"}}]');
+$cursor_ris = $c->aggregate($query_ris);
+
+$record = [];
+
+switch ($cursor_ris["result"][0]["type"]) {
+case "ARTIGO DE PERIODICO":
+    $record[] = "TY  - JOUR";
+    break;
+case "PARTE DE MONOGRAFIA/LIVRO":
+    $record[] = "TY  - CHAP";
+    break;
+case "TRABALHO DE EVENTO-RESUMO":
+    $record[] = "TY  - CPAPER";
+    break;
+case "TEXTO NA WEB":
+    $record[] = "TY  - ICOMM";
+    break;
+}
+
+$record[] = "TI  - ".$cursor_ris["result"][0]['title']."";
+
+if (!empty($cursor_ris["result"][0]['year'])) {
+$record[] = "PY  - ".$cursor_ris["result"][0]['year']."";
+}
+
+foreach ($cursor_ris["result"][0]['authors'] as $autores) {
+  $record[] = "AU  - ".$autores."";
+}
+
+if (!empty($cursor_ris["result"][0]['ispartof'])) {
+$record[] = "T2  - ".$cursor_ris["result"][0]['ispartof']."";
+}
+
+if (!empty($cursor_ris["result"][0]['issn_part'][0])) {
+$record[] = "SN  - ".$cursor_ris["result"][0]['issn_part'][0]."";
+}
+
+if (!empty($cursor_ris["result"][0]["doi"])) {
+$record[] = "DO  - ".$cursor_ris["result"][0]["doi"][0]."";
+}
+
+if (!empty($cursor_ris["result"][0]["url"])) {
+  $record[] = "UR  - ".$cursor_ris["result"][0]["url"][0]."";
+}
+
+if (!empty($cursor_ris["result"][0]["publisher-place"])) {
+  $record[] = "PP  - ".$cursor_ris["result"][0]["publisher-place"]."";
+}
+
+if (!empty($cursor_ris["result"][0]["publisher"])) {
+  $record[] = "PB  - ".$cursor_ris["result"][0]["publisher"]."";
+}
+
+if (!empty($cursor_ris["result"][0]["ispartof_data"])) {
+  foreach ($cursor_ris["result"][0]["ispartof_data"] as $ispartof_data) {
+    if (strpos($ispartof_data, 'v.') !== false) {
+      $record[] = "VL  - ".str_replace("v.","",$ispartof_data)."";
+    } elseif (strpos($ispartof_data, 'n.') !== false) {
+      $record[] = "IS  - ".str_replace("n.","",$ispartof_data)."";
+    } elseif (strpos($ispartof_data, 'p.') !== false) {
+      $record[] = "SP  - ".str_replace("p.","",$ispartof_data)."";
+    }
+  }
+}
+$record[] = "ER  - ";
+
+$record_blob = implode("\\n", $record);
 
 ?>
+<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+<script>
+      function SaveAsFile(t,f,m) {
+            try {
+                var b = new Blob([t],{type:m});
+                saveAs(b, f);
+            } catch (e) {
+                window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
+            }
+        }
+
+</script>
 </head>
 <body>
 <div class="ui container">
@@ -52,8 +135,7 @@ if (!empty($cursor["result"][0]["files"][0]["visitors"])) {
 
       <h3>Exportar</h3>
 
-      <a href="export_ris.php?_id=<?php echo $cursor["result"][0]["_id"];?>">RIS</a>
-
+       <button  class="ui blue label" onclick="SaveAsFile('<?php echo $record_blob; ?>','record.ris','text/plain;charset=utf-8')">RIS (EndNote)</button>
 
       <?php if (!empty($cursor["result"][0]["files"][0]["visitors"])) : ?>
       <h4>Visitas ao registro: <?php echo ''.$cursor["result"][0]["files"][0]["visitors"].''; ?></h4>
@@ -438,5 +520,6 @@ $('.menu .item')
   .tab()
 ;
 </script>
+
 </body>
 </html>
