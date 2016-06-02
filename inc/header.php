@@ -4,8 +4,8 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-  <!-- CSS - MetaSearch -->
-    <link rel="stylesheet" href="<?php echo "http://" . $_SERVER['SERVER_NAME'] ."/".$SERVER_DIRECTORY."/"; ?>inc/css/vcusp-theme.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="<?php echo "http://" . $_SERVER['SERVER_NAME'] ."/".$SERVER_DIRECTORY."/"; ?>inc/css/vcusp-theme.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="http://bdpife2.sibi.usp.br/vocab21/common/bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo "http://" . $_SERVER['SERVER_NAME'] ."/".$SERVER_DIRECTORY."/"; ?>inc/semantic-ui/semantic.min.css">

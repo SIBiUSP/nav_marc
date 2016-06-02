@@ -11,11 +11,17 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
   <div class="ten wide column">
     <div class="overlay">
       <div class="ui labeled icon vertical menu">
-        <a class="item" href="https://twitter.com/home?status=<?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>"><i class="twitter icon"></i> Tweet</a>
-        <a class="item" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>"><i class="facebook icon"></i> Share</a>
+        <a class="item" href="https://twitter.com/home?status=
+                                <?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>">
+            <i class="twitter icon"></i> Tweet</a>
+        <a class="item" href="https://www.facebook.com/sharer/sharer.php?u=
+                                <?php echo 'http://'.$_SERVER['HTTP_HOST'].''.$_SERVER['REQUEST_URI'].''; ?>">
+            <i class="facebook icon"></i> Share</a>
       </div>
     </div>
-    <p>A Biblioteca Digital da Produção Intelectual da Universidade de São Paulo (BDPI) é um sistema de gestão e disseminação da produção científica, acadêmica, técnica e artística gerada pelas pesquisas desenvolvidas na USP.</p>
+    <p>A Biblioteca Digital da Produção Intelectual da Universidade de São Paulo (BDPI)
+        é um sistema de gestão e disseminação da produção científica,
+        acadêmica, técnica e artística gerada pelas pesquisas desenvolvidas na USP.</p>
     <div class="ui vertical stripe segment" id="search">
       <div class="ui main container">
         <h3 class="ui header">Buscar</h3>
@@ -50,13 +56,13 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
     </div>
     </div>
     </div>
-    <?php get_last_records($c,15); ?>
+    <?php get_last_records($c, 15); ?>
   </div>
   <div class="six wide column">
     <?php
-      if (!empty($m)) {
+    if (!empty($m)) {
           generateUnidadeUSPInit($c, '$unidadeUSPtrabalhos', '_id', 1, 'Unidades USP', 100, '#');
-      };
+    };
     ?>
   </div>
 </div>
