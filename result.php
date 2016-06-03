@@ -206,7 +206,7 @@ if ($conta == 0) {
     <br/><br/>
 
     <div>
-      <form method="post" action="result_report.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
+      <form method="post" action="report.php?<?php echo $_SERVER['QUERY_STRING']; ?>">
         <button type="submit" name="page" class="ui icon button" value="<?php echo $escaped_url;?>">
             Gerar relatório
         </button>

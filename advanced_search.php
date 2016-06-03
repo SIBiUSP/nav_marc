@@ -26,7 +26,9 @@ $tpTitle="BDPI USP - Busca avançada";
       </div>
       <div class="ui vertical stripe segment" id="search">
         <h3 class="ui header" >Assunto</h3>
-        <a href="#" onclick="creaPopup('inc/popterms/index.php?t=subject&f=assunto&v=http://143.107.154.55/pt-br/services.php&loadConfig=1'); return false;">Consultar o VCUSP</a>
+          <a href="#" onclick="creaPopup('inc/popterms/index.php?t=subject&f=assunto&v=http://143.107.154.55/pt-br/services.php&loadConfig=1'); return false;">
+            Consultar o VCUSP
+          </a>
         <form class="ui form" role="form" action="result.php" method="get" name="assunto">
           <div class="inline fields">
             <div class="ui form">

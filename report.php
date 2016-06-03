@@ -13,58 +13,58 @@
   $mode = 'reference';
 
   /* Pegar a URL atual */
-  if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
+if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
       $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  } else {
-      $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
-  }
+} else {
+        $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
+}
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
     /* Query */
-    if (empty($_GET)) {
+if (empty($_GET)) {
         $query = json_decode('{}');
-    } elseif (!empty($_GET['category'])) {
+} elseif (!empty($_GET['category'])) {
         unset($_GET['category']);
         $q = str_replace('"', '\\"', $_GET['q']);
         unset($_GET['q']);
         $consult = '';
-        foreach ($_GET as $key => $value) {
+    foreach ($_GET as $key => $value) {
             $consult .= '"'.$key.'":"'.$value.'",';
-        }
-        $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
-        if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
-          if (array_key_exists("date_init", $query)) {
-            $query["year"]["\$gte"] = $query["date_init"];
-          } else {
-            $query["year"]["\$gte"] = "1";
-          }
-          if (array_key_exists("date_end", $query)) {
-          $query["year"]["\$lte"] = $query["date_end"];
-        } else {
-          $query["year"]["\$lte"] = "20500";
-        }
-          unset($query["date_init"]);
-          unset($query["date_end"]);
-        }
-    } else {
-        $query = array();
-        foreach ($_GET as $key => $value) {
-            $query[$key] = $value;
-        }
-        if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
-          if (array_key_exists("date_init", $query)) {
-            $query["year"]["\$gte"] = $query["date_init"];
-          } else {
-            $query["year"]["\$gte"] = "1";
-          }
-          if (array_key_exists("date_end", $query)) {
-          $query["year"]["\$lte"] = $query["date_end"];
-        } else {
-          $query["year"]["\$lte"] = "20500";
-        }
-          unset($query["date_init"]);
-          unset($query["date_end"]);
-        }
     }
+        $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
+    if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
+        if (array_key_exists("date_init", $query)) {
+                $query["year"]["\$gte"] = $query["date_init"];
+        } else {
+                $query["year"]["\$gte"] = "1";
+        }
+        if (array_key_exists("date_end", $query)) {
+                $query["year"]["\$lte"] = $query["date_end"];
+        } else {
+                $query["year"]["\$lte"] = "20500";
+        }
+          unset($query["date_init"]);
+          unset($query["date_end"]);
+    }
+} else {
+        $query = array();
+    foreach ($_GET as $key => $value) {
+            $query[$key] = $value;
+    }
+    if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
+        if (array_key_exists("date_init", $query)) {
+                $query["year"]["\$gte"] = $query["date_init"];
+        } else {
+            $query["year"]["\$gte"] = "1";
+        }
+        if (array_key_exists("date_end", $query)) {
+            $query["year"]["\$lte"] = $query["date_end"];
+        } else {
+            $query["year"]["\$lte"] = "20500";
+        }
+          unset($query["date_init"]);
+          unset($query["date_end"]);
+    }
+}
   /* Pagination variables */
     $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
     $limit = 15;
@@ -136,8 +136,8 @@
 <body>
   <div class="ui main container">
     <h3>Relatório com os seguintes parâmetros:
-    <?php foreach ($_GET as $filters): ?>
-      <?php echo $filters;?>
+    <?php foreach ($_GET as $filters) : ?>
+    <?php echo $filters;?>
     <?php endforeach;?>
     </h3><br/><br/>
 
@@ -159,9 +159,9 @@
     </div>
 
 
-<h3>Tipo de publicação</h3>
+<h3>Tipo de publicação (10 primeiros)</h3>
 <svg id="mat_type" width="1000" height="500"></svg>
-<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
+<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 10); ?>
 
 <script>
 InitChart();
@@ -239,101 +239,16 @@ function InitChart() {
 }
 </script>
 
-<?php generateDataTable($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 50); ?>
+<?php generateDataTable($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 10); ?>
 
 <?php $csv_type = generateCSV($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 500); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_type; ?>','tipo_de_material.csv','text/plain;charset=utf-8')">Exportar csv</button>
+<button class="ui blue label" onclick="SaveAsFile('<?php echo $csv_type; ?>','tipo_de_material.csv','text/plain;charset=utf-8')">
+    Exportar todos os tipos de publicação em csv
+</button>
 
-
-<h3>Unidade USP - Participações</h3>
-<svg id="unidadeUSP_part_bar" width="1000" height="500"></svg>
-<?php $unidadeUSP_part_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
-
-<script>
-InitChart();
-
-function InitChart() {
-
-  var barData = [<?= $unidadeUSP_part_bar; ?>];
-
-  var vis = d3.select('#unidadeUSP_part_bar'),
-    WIDTH = 1000,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
-    },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
-
-
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
-
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
-
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient("left")
-      .tickSubdivide(true);
-
-
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
-
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr('fill', 'grey')
-    .on('mouseover',function(d){
-      d3.select(this)
-        .attr('fill','blue');
-    })
-    .on('mouseout',function(d){
-      d3.select(this)
-        .attr('fill','grey');
-    });
-
-}
-</script>
-
-<?php generateDataTable($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
-<?php $csv_unidadeUSP = generateCSV($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_unidadeUSP; ?>','unidadeUSP_participacoes.csv','text/plain;charset=utf-8')">Exportar csv</button>
-
-
-
-<h3>Unidade USP - Trabalhos</h3>
+<h3>Unidade USP - Trabalhos (10 primeiros)</h3>
 <svg id="unidadeUSP_trab_bar" width="1000" height="500"></svg>
-<?php $unidadeUSP_trab_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+<?php $unidadeUSP_trab_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10); ?>
 
 <script>
 InitChart();
@@ -411,12 +326,100 @@ function InitChart() {
 }
 </script>
 
-<?php generateDataTable($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+<?php generateDataTable($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10); ?>
+<?php $csv_unidadeUSPtrabalhos = generateCSV($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_unidadeUSPtrabalhos; ?>','unidadeUSP_trabalhos.csv','text/plain;charset=utf-8')">Exportar todas os trabalhos por unidades em csv</button>      
 
+<h3>Unidade USP - Participações (10 primeiros)</h3>
+<svg id="unidadeUSP_part_bar" width="1000" height="500"></svg>
+<?php $unidadeUSP_part_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10); ?>
+
+<script>
+InitChart();
+
+function InitChart() {
+
+  var barData = [<?= $unidadeUSP_part_bar; ?>];
+
+  var vis = d3.select('#unidadeUSP_part_bar'),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+      return d.x;
+    })),
+
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(barData, function (d) {
+        return d.y;
+      })
+    ]),
+
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient("left")
+      .tickSubdivide(true);
+
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+      return xRange(d.x);
+    })
+    .attr('y', function (d) {
+      return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover',function(d){
+      d3.select(this)
+        .attr('fill','blue');
+    })
+    .on('mouseout',function(d){
+      d3.select(this)
+        .attr('fill','grey');
+    });
+
+}
+</script>
+
+<?php generateDataTable($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10); ?>
+<?php $csv_unidadeUSP = generateCSV($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_unidadeUSP; ?>','unidadeUSP_participacoes.csv','text/plain;charset=utf-8')">Exportar todas participações por Unidade em csv</button>
+
+
+ 
 
 <h3>Departamento - Participações</h3>
 <svg id="departamento_part_bar" width="1000" height="500"></svg>
-<?php $departamento_part_bar = generateDataGraphBar($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+<?php $departamento_part_bar = generateDataGraphBar($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10); ?>
 
 <script>
 InitChart();
@@ -494,21 +497,51 @@ function InitChart() {
 }
 </script>
 
-<?php generateDataTable($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+<?php generateDataTable($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10); ?>
+<?php $csv_departamento = generateCSV($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_departamento; ?>','departamento_part.csv','text/plain;charset=utf-8')">
+    Exportar todos as participações dos departamentos em csv
+</button>
 
 
 
+<h3>Autores USP (10 primeiros)</h3>
+<?php generateDataTable($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 10); ?>
+<?php $csv_authorUSP = generateCSV($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_authorUSP; ?>','autoresUSP.csv','text/plain;charset=utf-8')">Exportar todos os autores em csv</button>
+      
+      
+<h3>Obra da qual a produção faz parte (10 primeiros)</h3>      
+<?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 10); ?>
+<?php $csv_ispartof = generateCSV($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 20000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_ispartof; ?>','obras.csv','text/plain;charset=utf-8')">Exportar todos as obras em csv</button>
+      
 
-
-
-    <?php generateDataTable($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 50); ?>
-    <?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'É parte de', 50); ?>
-    <?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50); ?>
-    <?php generateDataTable($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50); ?>
-    <?php generateDataTable($url, $c, $query, '$language', 'count', -1, 'Idioma', 50); ?>
-    <?php generateDataTable($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 50); ?>
-    <?php generateDataTable($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50); ?>
-
+<h3>Nome do evento (10 primeiros)</h3>        
+<?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10); ?>
+<?php $csv_evento = generateCSV($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_evento; ?>','evento.csv','text/plain;charset=utf-8')">Exportar todos os eventos em csv</button>
+      
+      
+<h3>Ano de publicação</h3>  
+<?php generateDataTable($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 200); ?>
+<?php $csv_year = generateCSV($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_year; ?>','ano.csv','text/plain;charset=utf-8')">Exportar todos os anos em csv</button>
+      
+<h3>Idioma</h3>       
+<?php generateDataTable($url, $c, $query, '$language', 'count', -1, 'Idioma', 10); ?>
+<?php $csv_language = generateCSV($url, $c, $query, '$language', 'count', -1, 'Idioma', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_language; ?>','idioma.csv','text/plain;charset=utf-8')">Exportar todos os idiomas em csv</button>
+      
+<h3>Internacionalização</h3>      
+<?php generateDataTable($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 10); ?>
+<?php $csv_internacionalizacao = generateCSV($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_internacionalizacao; ?>','internacionalizacao.csv','text/plain;charset=utf-8')">Exportar em csv</button>
+      
+<h3>País de publicação</h3>
+<?php generateDataTable($url, $c, $query, '$country', 'count', -1, 'País de publicação', 10); ?>
+<?php $csv_country = generateCSV($url, $c, $query, '$country', 'count', -1, 'País de publicação', 10000); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_country; ?>','pais.csv','text/plain;charset=utf-8')">Exportar todos em csv</button>
 
     </div>
 

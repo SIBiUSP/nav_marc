@@ -315,12 +315,15 @@ echo "<table class=\"ui celled table\">
   </thead>
   <tbody>";
 
-
+    $i = 0;
     foreach ($facet['result'] as $facets) {
         echo "<tr>
               <td>".$facets['_id']."</td>
               <td>".$facets['count']."</td>
             </tr>";
+        if (++$i > $limit) {
+            break;
+        }
     };
 
   echo"</tbody>
