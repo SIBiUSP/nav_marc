@@ -146,7 +146,7 @@ if ($conta == 0) {
         }
         generateFacet($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 50);
         generateFacet($url, $c, $query, '$language', 'count', -1, 'Idioma', 50);
-        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'Obra do qual a produção faz parte', 50);
+        generateFacet($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 50);
         generateFacet($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 50);
         generateFacet($url, $c, $query, '$country', 'count', -1, 'País de publicação', 50);
         ?>
