@@ -499,7 +499,7 @@ function InitChart() {
 
 <?php generateDataTable($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10); ?>
 <?php $csv_departamento = generateCSV($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_departamento; ?>','departamento_part.csv','text/plain;charset=utf-8')">
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_departamento); ?>','departamento_part.csv','text/plain;charset=utf-8')">
     Exportar todos as participações dos departamentos em csv
 </button>
 
@@ -508,19 +508,20 @@ function InitChart() {
 <h3>Autores USP (10 primeiros)</h3>
 <?php generateDataTable($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 10); ?>
 <?php $csv_authorUSP = generateCSV($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 10000); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_authorUSP; ?>','autoresUSP.csv','text/plain;charset=utf-8')">Exportar todos os autores em csv</button>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_authorUSP); ?>','autoresUSP.csv','text/plain;charset=utf-8')">Exportar todos os autores em csv</button>
       
       
 <h3>Obra da qual a produção faz parte (10 primeiros)</h3>      
 <?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 10); ?>
 <?php $csv_ispartof = generateCSV($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 20000); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_ispartof; ?>','obras.csv','text/plain;charset=utf-8')">Exportar todos as obras em csv</button>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_ispartof); ?>','obras.csv','text/plain;charset=utf-8')">Exportar todos as obras em csv</button>
       
 
 <h3>Nome do evento (10 primeiros)</h3>        
 <?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10); ?>
 <?php $csv_evento = generateCSV($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10000); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_evento; ?>','evento.csv','text/plain;charset=utf-8')">Exportar todos os eventos em csv</button>
+<?php $csv_evento = str_replace('"','', $csv_evento); ?>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_evento); ?>','evento.csv','text/plain;charset=utf-8')">Exportar todos os eventos em csv</button>
       
       
 <h3>Ano de publicação</h3>  
@@ -541,7 +542,7 @@ function InitChart() {
 <h3>País de publicação</h3>
 <?php generateDataTable($url, $c, $query, '$country', 'count', -1, 'País de publicação', 10); ?>
 <?php $csv_country = generateCSV($url, $c, $query, '$country', 'count', -1, 'País de publicação', 10000); ?>
-<button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_country; ?>','pais.csv','text/plain;charset=utf-8')">Exportar todos em csv</button>
+<button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_country); ?>','pais.csv','text/plain;charset=utf-8')">Exportar todos em csv</button>
 
     </div>
 
