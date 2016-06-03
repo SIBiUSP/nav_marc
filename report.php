@@ -514,13 +514,14 @@ function InitChart() {
 <h3>Obra da qual a produção faz parte (10 primeiros)</h3>      
 <?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 10); ?>
 <?php $csv_ispartof = generateCSV($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 20000); ?>
+<?php $csv_ispartof = str_replace('"', '', $csv_ispartof); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_ispartof); ?>','obras.csv','text/plain;charset=utf-8')">Exportar todos as obras em csv</button>
       
 
 <h3>Nome do evento (10 primeiros)</h3>        
 <?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10); ?>
 <?php $csv_evento = generateCSV($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10000); ?>
-<?php $csv_evento = str_replace('"','', $csv_evento); ?>
+<?php $csv_evento = str_replace('"', '', $csv_evento); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_evento); ?>','evento.csv','text/plain;charset=utf-8')">Exportar todos os eventos em csv</button>
       
       
