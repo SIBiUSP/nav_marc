@@ -41,7 +41,14 @@ if (empty($_GET)) {
       $query = json_decode('{}');
 } elseif (!empty($_GET['category'])) {
       unset($_GET['category']);
-      $q = str_replace('"', '\\"', $_GET['q']);
+      $has_quote = strpos($_GET['q'], '"');
+      if ($has_quote === false) {
+          $q_array = explode( ' ', $_GET['q'] );
+          $q = '\"'.implode('\" \"',$q_array).'\"';
+          
+      } else {
+          $q = str_replace('"', '\\"', $_GET['q']);
+      }
       unset($_GET['q']);
       $consult = '';
     foreach ($_GET as $key => $value) {
