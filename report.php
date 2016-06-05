@@ -87,6 +87,13 @@ if (empty($_GET)) {
 <script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?2.1.3"></script>
 <script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?2.1.3"></script>
 
+<!-- UV Charts -->
+<script type="text/javascript" src=inc/uvcharts/uvcharts.full.min.js></script>
+<script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script> 
+<script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
+<script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script> 
+<script type="text/javascript" src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.js"></script>
+
 <!-- Save as javascript -->
 <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
 <script>
@@ -134,6 +141,7 @@ if (empty($_GET)) {
 
 </head>
 <body>
+    
   <div class="ui main container">
     <h3>Relatório com os seguintes parâmetros:
     <?php foreach ($_GET as $filters) : ?>
@@ -159,258 +167,79 @@ if (empty($_GET)) {
     </div>
 
 
-<h3>Tipo de publicação (10 primeiros)</h3>
-<svg id="mat_type" width="1000" height="500"></svg>
-<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 10); ?>
-
-<script>
-InitChart();
-
-function InitChart() {
-
-  var barData = [<?= $type_mat_bar; ?>];
-
-  var vis = d3.select('#mat_type'),
-    WIDTH = 1000,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
-    },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
-
-
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
-
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
-
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient("left")
-      .tickSubdivide(true);
-
-
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
-
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr('fill', 'grey')
-    .on('mouseover',function(d){
-      d3.select(this)
-        .attr('fill','blue');
-    })
-    .on('mouseout',function(d){
-      d3.select(this)
-        .attr('fill','grey');
-    });
-
-}
-</script>
-
-<?php generateDataTable($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 10); ?>
+<h3>Tipo de publicação (Somente os primeiros)</h3>
+<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 3); ?>
+      <div id="type_chart"></div>
+        <script type="application/javascript">
+        var graphdef = {
+            categories : ['Tipo'],
+            dataset : {
+                'Tipo' : [<?= $type_mat_bar; ?>]
+            }
+        }
+        var chart = uv.chart ('Bar', graphdef, {
+            meta : {
+                position: '#type_chart',
+                caption : 'Tipo de trabalho',
+                hlabel : 'Tipo',
+                vlabel : 'Registros',
+                isDownloadable: true,
+                downloadLabel: 'Baixar'
+            },
+            graph : {
+                orientation : "Vertical"
+            },
+            dimension : {
+                width: 900,
+                height: 300
+            }
+        })
+        </script> 
+<?php generateDataTable($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 9); ?>
 
 <?php $csv_type = generateCSV($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 500); ?>
 <button class="ui blue label" onclick="SaveAsFile('<?php echo $csv_type; ?>','tipo_de_material.csv','text/plain;charset=utf-8')">
     Exportar todos os tipos de publicação em csv
 </button>
 
+      
 <h3>Unidade USP - Trabalhos (10 primeiros)</h3>
-<svg id="unidadeUSP_trab_bar" width="1000" height="500"></svg>
-<?php $unidadeUSP_trab_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10); ?>
+<?php $unidadeUSP_trab_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 9); ?>
+      
 
-<script>
-InitChart();
+      <div id="unidadeUSP_chart"></div>
+        <script type="application/javascript">
+        var graphdef = {
+            categories : ['Unidade USP'],
+            dataset : {
+                'Unidade USP' : [<?= $unidadeUSP_trab_bar; ?>]
+            }
+        }
+        var chart = uv.chart ('Bar', graphdef, {
+            meta : {
+                position: '#unidadeUSP_chart',
+                caption : 'Tipo de trabalho',
+                hlabel : 'Tipo',
+                vlabel : 'Registros',
+                isDownloadable: true,
+                downloadLabel: 'Baixar'
+            },
+            graph : {
+                orientation : "Vertical"
+            },
+            dimension : {
+                width: 900,
+                height: 300
+            }
+        })
+        </script> 
 
-function InitChart() {
-
-  var barData = [<?= $unidadeUSP_trab_bar; ?>];
-
-  var vis = d3.select('#unidadeUSP_trab_bar'),
-    WIDTH = 1000,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
-    },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
-
-
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
-
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
-
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient("left")
-      .tickSubdivide(true);
-
-
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
-
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr('fill', 'grey')
-    .on('mouseover',function(d){
-      d3.select(this)
-        .attr('fill','blue');
-    })
-    .on('mouseout',function(d){
-      d3.select(this)
-        .attr('fill','grey');
-    });
-
-}
-</script>
-
-<?php generateDataTable($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10); ?>
+<?php generateDataTable($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 9); ?>
 <?php $csv_unidadeUSPtrabalhos = generateCSV($url, $c, $query, '$unidadeUSPtrabalhos', 'count', -1, 'Unidade USP - Trabalhos', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_unidadeUSPtrabalhos; ?>','unidadeUSP_trabalhos.csv','text/plain;charset=utf-8')">Exportar todas os trabalhos por unidades em csv</button>      
 
 <h3>Unidade USP - Participações (10 primeiros)</h3>
-<svg id="unidadeUSP_part_bar" width="1000" height="500"></svg>
-<?php $unidadeUSP_part_bar = generateDataGraphBar($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10); ?>
-
-<script>
-InitChart();
-
-function InitChart() {
-
-  var barData = [<?= $unidadeUSP_part_bar; ?>];
-
-  var vis = d3.select('#unidadeUSP_part_bar'),
-    WIDTH = 1000,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
-    },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
-
-
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
-
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
-
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient("left")
-      .tickSubdivide(true);
-
-
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
-
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr('fill', 'grey')
-    .on('mouseover',function(d){
-      d3.select(this)
-        .attr('fill','blue');
-    })
-    .on('mouseout',function(d){
-      d3.select(this)
-        .attr('fill','grey');
-    });
-
-}
-</script>
-
-<?php generateDataTable($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10); ?>
+<?php generateDataTable($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 9); ?>
 <?php $csv_unidadeUSP = generateCSV($url, $c, $query, '$unidadeUSP', 'count', -1, 'Unidade USP - Participações', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_unidadeUSP; ?>','unidadeUSP_participacoes.csv','text/plain;charset=utf-8')">Exportar todas participações por Unidade em csv</button>
 
@@ -418,86 +247,7 @@ function InitChart() {
  
 
 <h3>Departamento - Participações</h3>
-<svg id="departamento_part_bar" width="1000" height="500"></svg>
-<?php $departamento_part_bar = generateDataGraphBar($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10); ?>
-
-<script>
-InitChart();
-
-function InitChart() {
-
-  var barData = [<?= $departamento_part_bar; ?>];
-
-  var vis = d3.select('#departamento_part_bar'),
-    WIDTH = 1000,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
-    },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
-
-
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
-
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
-
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient("left")
-      .tickSubdivide(true);
-
-
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
-
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr('fill', 'grey')
-    .on('mouseover',function(d){
-      d3.select(this)
-        .attr('fill','blue');
-    })
-    .on('mouseout',function(d){
-      d3.select(this)
-        .attr('fill','grey');
-    });
-
-}
-</script>
-
-<?php generateDataTable($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10); ?>
+<?php generateDataTable($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 9); ?>
 <?php $csv_departamento = generateCSV($url, $c, $query, '$departamento', 'count', -1, 'Departamento - Participações', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_departamento); ?>','departamento_part.csv','text/plain;charset=utf-8')">
     Exportar todos as participações dos departamentos em csv
@@ -506,26 +256,56 @@ function InitChart() {
 
 
 <h3>Autores USP (10 primeiros)</h3>
-<?php generateDataTable($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 10); ?>
+<?php generateDataTable($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 9); ?>
 <?php $csv_authorUSP = generateCSV($url, $c, $query, '$authorUSP', 'count', -1, 'Autores USP', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_authorUSP); ?>','autoresUSP.csv','text/plain;charset=utf-8')">Exportar todos os autores em csv</button>
       
       
 <h3>Obra da qual a produção faz parte (10 primeiros)</h3>      
-<?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 10); ?>
+<?php generateDataTable($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 9); ?>
 <?php $csv_ispartof = generateCSV($url, $c, $query, '$ispartof', 'count', -1, 'Obra da qual a produção faz parte', 20000); ?>
 <?php $csv_ispartof = str_replace('"', '', $csv_ispartof); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_ispartof); ?>','obras.csv','text/plain;charset=utf-8')">Exportar todos as obras em csv</button>
       
 
 <h3>Nome do evento (10 primeiros)</h3>        
-<?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10); ?>
+<?php generateDataTable($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 9); ?>
 <?php $csv_evento = generateCSV($url, $c, $query, '$evento', 'count', -1, 'Nome do evento', 10000); ?>
 <?php $csv_evento = str_replace('"', '', $csv_evento); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo str_replace("'", "", $csv_evento); ?>','evento.csv','text/plain;charset=utf-8')">Exportar todos os eventos em csv</button>
       
       
 <h3>Ano de publicação</h3>  
+<?php $ano_bar = generateDataGraphBar($url, $c, $query, '$year', '_id', -1, 'Ano', 19); ?>
+      
+
+      <div id="ano_chart"></div>
+        <script type="application/javascript">
+        var graphdef = {
+            categories : ['Ano'],
+            dataset : {
+                'Ano' : [<?= $ano_bar; ?>]
+            }
+        }
+        var chart = uv.chart ('Bar', graphdef, {
+            meta : {
+                position: '#ano_chart',
+                caption : 'Tipo de trabalho',
+                hlabel : 'Tipo',
+                vlabel : 'Registros',
+                isDownloadable: true,
+                downloadLabel: 'Baixar'
+            },
+            graph : {
+                orientation : "Vertical"
+            },
+            dimension : {
+                width: 900,
+                height: 300
+            }
+        })
+        </script>       
+      
 <?php generateDataTable($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 200); ?>
 <?php $csv_year = generateCSV($url, $c, $query, '$year', '_id', -1, 'Ano de publicação', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_year; ?>','ano.csv','text/plain;charset=utf-8')">Exportar todos os anos em csv</button>
@@ -535,7 +315,35 @@ function InitChart() {
 <?php $csv_language = generateCSV($url, $c, $query, '$language', 'count', -1, 'Idioma', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_language; ?>','idioma.csv','text/plain;charset=utf-8')">Exportar todos os idiomas em csv</button>
       
-<h3>Internacionalização</h3>      
+<h3>Internacionalização</h3>  
+      
+    
+        <div id="internacionalização_chart"></div>
+      <?php $internacionalizacao_bar = generateDataGraphBar($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 10); ?>
+        <script type="application/javascript">
+        var graphdef = {
+            categories : ['Internacionalização'],
+            dataset : {
+                'Internacionalização' : [<?= $internacionalizacao_bar; ?>]
+            }
+        }
+        var chart = uv.chart ('Pie', graphdef, {
+            meta : {
+                position: '#internacionalização_chart',
+                caption : 'Internacionalização',
+                subcaption : 'Trabalhos publicados em publicações internacionais',
+                hlabel : 'Registros',
+                vlabel : 'Local',
+                isDownloadable: true,
+                downloadLabel: 'Baixar'
+            },
+            dimension : {
+                width: 600,
+                height: 600
+            }
+        })
+        </script>      
+      
 <?php generateDataTable($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 10); ?>
 <?php $csv_internacionalizacao = generateCSV($url, $c, $query, '$internacionalizacao', 'count', -1, 'Internacionalização', 10000); ?>
 <button  class="ui blue label" onclick="SaveAsFile('<?php echo $csv_internacionalizacao; ?>','internacionalizacao.csv','text/plain;charset=utf-8')">Exportar em csv</button>
