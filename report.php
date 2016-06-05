@@ -5,13 +5,6 @@
   include 'inc/header.php';
   include_once 'inc/functions.php';
 
-  /* Citeproc-PHP*/
-  include 'inc/citeproc-php/CiteProc.php';
-  $csl = file_get_contents('inc/citeproc-php/style/abnt.csl');
-  $lang = 'br';
-  $citeproc = new citeproc($csl, $lang);
-  $mode = 'reference';
-
   /* Pegar a URL atual */
 if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
       $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -83,9 +76,7 @@ if (empty($_GET)) {
 ?>
 
 <!-- D3.js Libraries and CSS -->
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.1.3"></script>
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?2.1.3"></script>
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?2.1.3"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
 
 <!-- UV Charts -->
 <script type="text/javascript" src=inc/uvcharts/uvcharts.full.min.js></script>
@@ -106,43 +97,10 @@ if (empty($_GET)) {
             }
         }
 </script>
-
-
-<style type="text/css">
-    .slice text {
-        font-size: 8pt;
-        font-family: Arial;
-    }
-</style>
-
-<style type="text/css">
-.axis path, .axis line
-{
-    fill: none;
-    stroke: #777;
-    shape-rendering: crispEdges;
-}
-
-.axis text
-{
-    font-family: 'Arial';
-    font-size: 8px;
-}
-.tick
-{
-    stroke-dasharray: 1, 2;
-}
-.bar
-{
-    fill: FireBrick;
-}
-
-</style>
-
 </head>
 <body>
     
-  <div class="ui main container">
+  <div id="body" class="ui main container">
     <h3>Relatório com os seguintes parâmetros:
     <?php foreach ($_GET as $filters) : ?>
     <?php echo $filters;?>
@@ -168,8 +126,8 @@ if (empty($_GET)) {
 
 
 <h3>Tipo de publicação (Somente os primeiros)</h3>
-<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 3); ?>
-      <div id="type_chart"></div>
+<?php $type_mat_bar = generateDataGraphBar($url, $c, $query, '$type', 'count', -1, 'Tipo de publicação', 4); ?>
+      <div id="type_chart" style="font-size:10px"></div>
         <script type="application/javascript">
         var graphdef = {
             categories : ['Tipo'],
@@ -218,8 +176,8 @@ if (empty($_GET)) {
         var chart = uv.chart ('Bar', graphdef, {
             meta : {
                 position: '#unidadeUSP_chart',
-                caption : 'Tipo de trabalho',
-                hlabel : 'Tipo',
+                caption : 'Unidade USP',
+                hlabel : 'Unidade USP',
                 vlabel : 'Registros',
                 isDownloadable: true,
                 downloadLabel: 'Baixar'
@@ -290,8 +248,8 @@ if (empty($_GET)) {
         var chart = uv.chart ('Bar', graphdef, {
             meta : {
                 position: '#ano_chart',
-                caption : 'Tipo de trabalho',
-                hlabel : 'Tipo',
+                caption : 'Ano de publicação',
+                hlabel : 'Ano',
                 vlabel : 'Registros',
                 isDownloadable: true,
                 downloadLabel: 'Baixar'
@@ -338,7 +296,7 @@ if (empty($_GET)) {
                 downloadLabel: 'Baixar'
             },
             dimension : {
-                width: 600,
+                width: document.getElementById("body").offsetWidth,
                 height: 600
             }
         })
