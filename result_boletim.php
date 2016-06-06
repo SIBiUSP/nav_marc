@@ -162,13 +162,12 @@ include_once 'inc/functions.php';
   /* Query */
   if (empty($_GET)) {
       $query = json_decode('{}');
-  } elseif (!empty($_GET['category'])) {
-      unset($_GET['category']);
-      $q = str_replace('"', '\\"', $_GET['q']);
-      unset($_GET['q']);
-      $consult = '';
-      foreach ($_GET as $key => $value) {
-          $consult .= '"'.$key.'":"'.$value.'",';
+  } elseif (!empty($_GET['search_index'])) {
+        $q = str_replace('"', '\\"', $_GET['search_index']);
+        unset($_GET['search_index']);
+        $consult = '';
+    foreach ($_GET as $key => $value) {
+            $consult .= '"'.$key.'":"'.$value.'",';
       }
       $query = json_decode('{'.$consult.'"$text": {"$search":"'.$q.'"}}');
       if ((array_key_exists("date_init", $query))||(array_key_exists("date_end", $query))) {
