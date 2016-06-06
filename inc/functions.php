@@ -124,7 +124,7 @@ function generateFacet($url, $c, $query, $facet_name, $sort_name, $sort_value, $
     $i = 0;
     foreach ($facet['result'] as $facets) {
         echo '<div class="item">';
-        echo '<a href="'.$url.'&'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a><span> ('.$facets['count'].')</span>';
+        echo '<a href="'.$url.'&'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a><div class="ui label">'.$facets['count'].'</div>';
         echo '</div>';
         if (++$i > $limit) {
             break;
@@ -174,7 +174,7 @@ function generateFacetFirst($url, $c, $query, $facet_name, $sort_name_1, $sort_n
     $i = 0;
     foreach ($facet['result'] as $facets) {
         echo '<div class="item">';
-        echo '<a href="'.$url.'&'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a><span> ('.$facets['count'].')</span>';
+        echo '<a href="'.$url.'&'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a><div class="ui label">'.$facets['count'].'</div>';
         echo '</div>';
         if (++$i > $limit) {
             break;

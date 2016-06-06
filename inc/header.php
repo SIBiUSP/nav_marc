@@ -20,39 +20,10 @@
 
 <title><?php echo $tpTitle ?></title>
 
-<script>
-  $(document)
-    .ready(function() {
-
-      // fix main menu to page on passing
-      $('.main.menu').visibility({
-        type: 'fixed'
-      });
-      $('.overlay').visibility({
-        type: 'fixed',
-        offset: 80
-      });
-
-      // lazy load images
-      $('.image').visibility({
-        type: 'image',
-        transition: 'vertical flip in',
-        duration: 500
-      });
-
-      // show dropdown on hover
-      $('.main.menu  .ui.dropdown').dropdown({
-        on: 'hover'
-      });
-    })
-  ;
-  </script>
+<script src="http://semantic-ui.com/dist/semantic.min.js"></script>
 
   <style type="text/css">
 
-  body {
-    background-color: #FFFFFF;
-  }
   .main.container {
     margin-top: 2em;
   }
@@ -70,16 +41,6 @@
   }
   .main.menu .item img.logo {
     margin-right: 1.5em;
-  }
-
-  .overlay {
-    float: left;
-    margin: 0em 3em 1em 0em;
-  }
-  .overlay .menu {
-    position: relative;
-    left: 0;
-    transition: left 0.5s ease;
   }
 
 .ui.inverted.menu .item,
@@ -254,8 +215,7 @@
     </div>
   </div>
 
-
-    <div class="ui inverted yellow borderless main menu">
+      <div class="ui inverted yellow borderless main menu">
 
         <div href="#" class="header item">
           <a href="index.php" class="item">Início</a>
@@ -281,7 +241,13 @@
         </a>
         <div class="right menu">
           <div class="item">
-            <a class="ui button" href="login.php">Login</a>
+          <div class="ui transparent inverted icon input">
+            <i class="search icon"></i>
+            <input type="text" placeholder="Pesquisar">
+          </div>
+        </div>
+          <div class="item">
+            <a href="login.php">Login</a>
           </div>
         </div>
       </div>

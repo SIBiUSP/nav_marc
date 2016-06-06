@@ -61,8 +61,13 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
   include 'inc/footer.php';
 ?>
 <script>
-$('.activating.element')
+$('.ui.flowing')
   .popup()
+;
+</script>
+<script>
+$('.ui.dropdown')
+  .dropdown()
 ;
 </script>
 <script>
