@@ -68,9 +68,9 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
     $i = 0;
     foreach ($facet_init['result'] as $facets) {
         echo '<div class="column"><div class="item">
-              <div class="ui fluid image">
+              <div class="ui fluid image" data-title="'.trim($facets['_id']).'">
                 <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'">
-                <div id="imagelogo" class="floating ui mini teal label" style="z-index:0;" data-title="'.trim($facets['_id']).'">
+                <div id="imagelogo" class="floating ui mini teal label" style="z-index:0;">
                 '.$facets['count'].'
                 </div>';
                 $file = 'inc/images/logosusp/'.$facets['_id'].'.jpg';
