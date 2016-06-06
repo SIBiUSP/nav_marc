@@ -8,7 +8,9 @@ $tpTitle="BDPI USP - Busca avançada";
   include_once 'inc/functions.php';
 ?>
 
-
+</head>
+<body>
+       <?php include 'inc/barrauspenav.php'; ?> 
     <div class="ui text container">
         <div class="ui vertical stripe segment" id="search">
           <h3 class="ui header" >Buscar</h3>

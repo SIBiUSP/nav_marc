@@ -58,7 +58,9 @@ var content = [
 	{ title: 'CEBIMAR', value:'Centro de Biologia Marinha (CEBIMar)' }
 ]; 
 </script>
-
+</head>
+<body>
+    <?php include 'inc/barrauspenav.php'; ?>    
 <div class="ui main container">
 <div class="ui two column stackable grid">
   <div class="ten wide column">

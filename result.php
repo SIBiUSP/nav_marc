@@ -117,6 +117,7 @@ if ($conta == 0) {
 </script>
 </head>
 <body>
+   <?php include 'inc/barrauspenav.php'; ?>        
   <div class="ui main container">
   <div class="ui main two column stackable grid">
     <div class="four wide column">
@@ -232,7 +233,7 @@ if ($conta == 0) {
 
 
 
-    <div class="page-header"><h3>Resultado da busca <small><?php print_r($total);?></small></h3></div>
+    <div class="page-header"><h3>Resultado da busca: <?php print_r($total);?> registros</h3></div></br>
 
     <?php
     /* Pagination - Start */
@@ -258,7 +259,7 @@ if ($conta == 0) {
             echo '<form method="post" action="'.$escaped_url.'">';
             echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
             echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
-            echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
+            echo '<button class="ui button">Página: '.$page.' de '.ceil($total / $limit).'</button>';
             echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">
             Próximo
             <i class="right chevron icon"></i></button>';
@@ -481,7 +482,7 @@ if ($page > 1) {
         echo '<form method="post" action="'.$escaped_url.'">';
         echo '<input type="hidden" name="extra_submit_param" value="extra_submit_value">';
         echo '<button class="ui labeled icon button disabled"><i class="left chevron icon"></i>Anterior</button>';
-        echo '<button class="ui button">'.$page.' de '.ceil($total / $limit).'</button>';
+        echo '<button class="ui button">Página: '.$page.' de '.ceil($total / $limit).'</button>';
         echo '<button type="submit" name="page" value="'.$next.'" class="ui right labeled icon button active">
         Próximo
         <i class="right chevron icon"></i>

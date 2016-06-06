@@ -47,6 +47,7 @@ $tpTitle = 'Login - BDPI USP';
   </script>
 </head>
 <body>
+   <?php include 'inc/barrauspenav.php'; ?>    
 <div class="ui middle aligned center aligned grid">
   <div class="column1">
     <h2 class="ui teal image header">

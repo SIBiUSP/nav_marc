@@ -98,7 +98,7 @@ if (empty($_GET)) {
 </script>
 </head>
 <body>
-    
+   <?php include 'inc/barrauspenav.php'; ?>     
   <div id="body" class="ui main container">
     <h3>Relatório com os seguintes parâmetros:
     <?php foreach ($_GET as $filters) : ?>
