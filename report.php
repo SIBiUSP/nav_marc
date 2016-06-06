@@ -15,10 +15,9 @@ if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
     /* Query */
 if (empty($_GET)) {
         $query = json_decode('{}');
-} elseif (!empty($_GET['category'])) {
-        unset($_GET['category']);
-        $q = str_replace('"', '\\"', $_GET['q']);
-        unset($_GET['q']);
+} elseif (!empty($_GET['search_index'])) {
+        $q = str_replace('"', '\\"', $_GET['search_index']);
+        unset($_GET['search_index']);
         $consult = '';
     foreach ($_GET as $key => $value) {
             $consult .= '"'.$key.'":"'.$value.'",';
