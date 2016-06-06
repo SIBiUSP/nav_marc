@@ -138,7 +138,7 @@ $('.ui.search')
   .search({
     source: content,
     searchFields   : [
-      'value'
+      'value', 'title'
     ]
   })
 ;  
