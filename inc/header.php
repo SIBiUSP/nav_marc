@@ -242,8 +242,12 @@
         <div class="right menu">
           <div class="item">
           <div class="ui transparent inverted icon input">
-            <i class="search icon"></i>
-            <input type="text" placeholder="Pesquisar">
+            
+              <form role="form" action="result.php" method="get">
+                  <i class="search icon"></i>
+                  <input type="text" placeholder="Pesquisar" name="search_index">
+                  <button class="ui button" type="submit">Buscar</button>
+              </form>
           </div>
         </div>
           <div class="item">

@@ -13,22 +13,13 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
         é um sistema de gestão e disseminação da produção científica,
         acadêmica, técnica e artística gerada pelas pesquisas desenvolvidas na USP.</p>
     <div class="ui vertical stripe segment" id="search">
-      <div class="ui main container">
         <h3 class="ui header">Buscar</h3>
-        <form class="ui form" role="form" action="result.php" method="get">
-          <div class="inline fields">
-            <div class="eight wide field">
-              <input name="q" type="text" placeholder="Digite os termos de busca">
-            </div>
-            <div class="six wide field">
-              <select class="ui fluid dropdown" name="category">
-                <option value="buscaindice">Título, autores e assuntos</option>
-              </select>
+        <form role="form" action="result.php" method="get">
+              <div class="ui fluid action input">
+                  <input placeholder="Pesquisar..." type="text" name="search_index">
+                  <button class="ui button" type="submit">Buscar</button>
               </div>
-            <button type="submit" id="s" class="ui large button">Buscar</button>
-        </div>
         </form>
-        </div>
     </div>
     <?php $total_registros = countRecords($c); ?>
     <div class="ui vertical stripe segment">

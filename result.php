@@ -29,27 +29,27 @@ if (isset($_POST["login_role"])) {
 #  $mode = "reference";
 
 
-  /* Pegar a URL atual */
+/* Pegar a URL atual */
 if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
       $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 } else {
       $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}?";
 }
     $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
-  /* Query */
+
+/* Query */
 if (empty($_GET)) {
       $query = json_decode('{}');
-} elseif (!empty($_GET['category'])) {
-      unset($_GET['category']);
-      $has_quote = strpos($_GET['q'], '"');
+} elseif (!empty($_GET['search_index'])) {
+      $has_quote = strpos($_GET['search_index'], '"');
       if ($has_quote === false) {
-          $q_array = explode( ' ', $_GET['q'] );
+          $q_array = explode( ' ', $_GET['search_index'] );
           $q = '\"'.implode('\" \"',$q_array).'\"';
           
       } else {
-          $q = str_replace('"', '\\"', $_GET['q']);
+          $q = str_replace('"', '\\"', $_GET['search_index']);
       }
-      unset($_GET['q']);
+      unset($_GET['search_index']);
       $consult = '';
     foreach ($_GET as $key => $value) {
           $consult .= '"'.$key.'":"'.$value.'",';
