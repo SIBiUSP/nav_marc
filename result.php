@@ -113,8 +113,9 @@ if ($conta == 0) {
 }
 
 ?>
-<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js">
-</script>
+<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+<!-- Altmetric Script -->
+<script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 </head>
 <body>
    <?php include 'inc/barrauspenav.php'; ?>        
@@ -363,6 +364,7 @@ if ($conta == 0) {
       <i class="right chevron icon"></i>
     </div></a>
     <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
+      <div data-badge-popover="right" data-badge-type="donut" data-doi="<?php echo $r['doi'][0];?>" data-hide-no-mentions="true" class="altmetric-embed"></div>
     <?php endif; ?>
 
     <?php load_itens($r['_id']); ?>
