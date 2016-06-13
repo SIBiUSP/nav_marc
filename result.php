@@ -308,7 +308,7 @@ if ($conta == 0) {
           
     <?php if (!empty($r['doi'])) : ?>
     <br/><br/>
-    <object height="50" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
+    <object height="50" style="overflow:hidden" data="http://api.elsevier.com/content/abstract/citation-count?doi=<?php echo $r['doi'][0];?>&apiKey=c7af0f4beab764ecf68568961c2a21ea&httpAccept=text/html"></object>
       <div data-badge-popover="right" data-badge-type="donut" data-doi="<?php echo $r['doi'][0];?>" data-hide-no-mentions="true" class="altmetric-embed"></div>
     <?php endif; ?>          
           
