@@ -73,7 +73,7 @@ $tpTitle = 'BDPI USP - Biblioteca Digital da Produção Intelectual da Universid
 <div class="ten wide column">
     
 <div class="ui instant move reveal">
-  <img class="visible content" src="http://semantic-ui.com/images/wireframe/square-image.png">
+  <img class="visible content" src="inc/images/BDPI.png">
   <img class="hidden content" src="http://www.producao.usp.br/jspui/image/08102014imagensdocampusfotomarcossantos015.jpg">
 </div>    
     
