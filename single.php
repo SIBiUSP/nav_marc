@@ -2,10 +2,17 @@
   $tpTitle="BDPI USP - Detalhes do registro";
 
   include 'inc/config.php';
-  include 'inc/header.php';
+  include 'inc/meta-header.php';
   include_once 'inc/functions.php';
 
-
+    /* Citation Style - Session - Default: ABNT */
+    
+    if (empty($_SESSION["citation_style"])) {
+        $_SESSION["citation_style"]="abnt";
+    }
+    if (isset($_POST["citation_style"])) {
+        $_SESSION["citation_style"] = $_POST['citation_style'];
+    }    
 
 
   /* Pegar a URL atual */
@@ -155,8 +162,10 @@ $record_blob = implode("\\n", $record);
 </script>
 </head>
 <body>
-<?php include 'inc/barrauspenav.php'; ?>    
+<?php include 'inc/barrausp.php'; ?>    
 <div class="ui container">
+    <?php include 'inc/header.php'; ?>
+    <?php include 'inc/navbar.php'; ?>  
   <div class="ui main two column stackable grid">
     <div class="four wide column">
       <br/><br/><br/><h3>Ver registro no DEDALUS</h3>
@@ -303,7 +312,7 @@ $record_blob = implode("\\n", $record);
 
         <?php if (!empty($cursor["result"][0]['doi'])): ?>
           <br/><br/>
-          <a href="http://dx.doi.org/<?php echo $cursor["result"][0]['doi'][0];?>">
+          <a href="http://dx.doi.org/<?php echo $cursor["result"][0]['doi'][0];?>" target="_blank">
           <div class="ui right floated primary button">
             Acesso online
             <i class="right chevron icon"></i>

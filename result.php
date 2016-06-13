@@ -2,7 +2,7 @@
   $tpTitle = 'BDPI USP - Resultado da Busca';
 
   include 'inc/config.php';
-  include 'inc/header.php';
+  include 'inc/meta-header.php';
   include_once 'inc/functions.php';
 
 #  if (empty($_SESSION["citation_style"])) {
@@ -118,8 +118,10 @@ if ($conta == 0) {
 <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 </head>
 <body>
-   <?php include 'inc/barrauspenav.php'; ?>        
+    <?php include 'inc/barrausp.php'; ?> 
   <div class="ui main container">
+      <?php include 'inc/header.php'; ?> 
+      <?php include 'inc/navbar.php'; ?> 
   <div class="ui main two column stackable grid">
     <div class="four wide column">
       <div class="item">
@@ -306,12 +308,12 @@ if ($conta == 0) {
       </h4>
     </div>
     <div class="content">
-      <a class="header" href="single.php?_id=<?php echo $r['_id'];?>">
+      <a class="ui medium header" href="single.php?_id=<?php echo $r['_id'];?>">
             <?php echo $r['title'];?> (<?php echo $r['year']; ?>)
       </a>
     <!--List authors -->
     <div class="extra">
-    <h4>Autores:</h4>
+    <a class="ui sub header">Autores:</a>
     <?php if (!empty($r['authors'])) : ?>
         <?php foreach ($r['authors'] as $autores) : ?>
         <div class="ui label" style="color:black;">
@@ -322,7 +324,7 @@ if ($conta == 0) {
     <?php endif; ?>
   </div>
   <div class="extra">
-  <h4>Unidades USP:</h4>
+  <a class="ui sub header">Unidades USP:</a>
     <?php if (!empty($r['unidadeUSP'])) : ?>
     <?php $unique =  array_unique($r['unidadeUSP']); ?>
     <?php foreach ($unique as $unidadeUSP) : ?>
@@ -334,7 +336,7 @@ if ($conta == 0) {
     <?php endif; ?>
 </div>
   <div class="extra">
-    <h4>Assuntos:</h4>
+    <a class="ui sub header">Assuntos:</a>
     <?php if (!empty($r['subject'])) : ?>
         <?php foreach ($r['subject'] as $assunto) : ?>
         <div class="ui label" style="color:black;">
@@ -347,7 +349,7 @@ if ($conta == 0) {
         <?php foreach ($r['url'] as $url) : ?>
         <?php if ($url != '') : ?>
           <br/><br/>
-        <a href="<?php echo $url;?>">
+        <a href="<?php echo $url;?>" target="_blank">
           <div class="ui right floated primary button">
             Acesso online
             <i class="right chevron icon"></i>
@@ -358,7 +360,7 @@ if ($conta == 0) {
     <?php endif; ?>
     <?php if (!empty($r['doi'])) : ?>
     <br/><br/>
-    <a href="http://dx.doi.org/<?php echo $r['doi'][0];?>">
+    <a href="http://dx.doi.org/<?php echo $r['doi'][0];?>" target="_blank">
     <div class="ui right floated primary button">
       Acesso online
       <i class="right chevron icon"></i>
@@ -502,8 +504,8 @@ echo '</div>';
   include 'inc/footer.php';
 ?>
 <script>
-$('.ui.accordion')
-  .accordion()
+$('.ui.dropdown')
+  .dropdown()
 ;
 </script>
 <script>

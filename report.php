@@ -2,7 +2,7 @@
   $tpTitle = 'BDPI USP - Relatório gerencial';
 
   include 'inc/config.php';
-  include 'inc/header.php';
+  include 'inc/meta-header.php';
   include_once 'inc/functions.php';
 
   /* Pegar a URL atual */
@@ -98,8 +98,10 @@ if (empty($_GET)) {
 </script>
 </head>
 <body>
-   <?php include 'inc/barrauspenav.php'; ?>     
+   <?php include 'inc/barrausp.php'; ?>     
   <div id="body" class="ui main container">
+      <?php include 'inc/header.php'; ?>
+      <?php include 'inc/navbar.php'; ?> 
     <h3>Relatório com os seguintes parâmetros:
     <?php foreach ($_GET as $filters) : ?>
     <?php echo $filters;?>

@@ -63,29 +63,27 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
     $facet_init = $c->aggregate($aggregate_facet_init);
 
     echo '<h3><a href="'.$link.'">'.$facet_display_name.'</a></h3>';
-    echo '<div class="ui relaxed horizontal list">
-    <div class="ui four column doubling grid" style="padding:15px;">';
+    echo '<div class="ui five stackable doubling cards">';
     $i = 0;
     foreach ($facet_init['result'] as $facets) {
-        echo '<div class="column"><div class="item">
-              <div class="ui fluid image" data-title="'.trim($facets['_id']).'">
-                <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'">
-                <div id="imagelogo" class="floating ui mini teal label" style="z-index:0;">
-                '.$facets['count'].'
-                </div>';
+        echo ' <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'"><div class="ui card" data-title="'.trim($facets['_id']).'" style="box-shadow:none;"><div class="image">';
                 $file = 'inc/images/logosusp/'.$facets['_id'].'.jpg';
                 if (file_exists($file)) {
-                echo '<img src="inc/images/logosusp/'.$facets['_id'].'.jpg"></a>';
+                echo '<img src="inc/images/logosusp/'.$facets['_id'].'.jpg" style="height: 65px;">';
                 } else {
                   echo ''.$facets['_id'].'</a>';
               };
-              echo'</div></div>
-            </div>';
+              echo'</div></a>';
+        echo '<div class="content" style="padding:0.3em;"><a class="ui center aligned tiny header" href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'">'.$facets['_id'].'</a></div>
+                <div id="imagelogo" class="floating ui mini teal label" style="z-index:0;">
+                '.$facets['count'].'
+                </div>';
+        echo '</div>';
         if (++$i > $limit) {
             break;
         }
     };
-    echo '</div></div>';
+    echo '</div>';
 
 
 
@@ -229,7 +227,7 @@ function get_last_records($c,$number){
     echo '</div>';
     echo '<div class="content">';
     if (!empty($r['title'])){
-      echo '<a class="header" href="single.php?_id='.$r['_id'].'">'.$r['title'].' ('.$r['year'].')</a>';
+      echo '<a class="ui small header" href="single.php?_id='.$r['_id'].'">'.$r['title'].' ('.$r['year'].')</a>';
     };
     echo '<div class="extra">';
     if (!empty($r['authors'])) {
@@ -424,7 +422,7 @@ function load_itens ($sysno) {
     if ($xml->error == "No associated items"){
 
     } else {
-            echo "<h4>Exemplares físicos disponíveis nas Bibliotecas</h4>
+            echo "<h4 class=\"ui sub header\">Exemplares físicos disponíveis nas Bibliotecas</h4>
             <table class=\"ui celled table\">
                     <thead>
                       <tr>

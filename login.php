@@ -3,7 +3,7 @@ $tpTitle = 'Login - BDPI USP';
 ?>
 <?php
   include ('inc/config.php');
-  include ('inc/header.php');
+  include ('inc/meta-header.php');
   include_once 'inc/functions.php';
 ?>
 <title><?php echo gettext("branch");?> - Login</title>
@@ -47,7 +47,10 @@ $tpTitle = 'Login - BDPI USP';
   </script>
 </head>
 <body>
-   <?php include 'inc/barrauspenav.php'; ?>    
+   <?php include 'inc/barrausp.php'; ?>    
+    <div class="ui container">
+        <?php include 'inc/header.php'; ?>
+        <?php include 'inc/navbar.php'; ?> 
 <div class="ui middle aligned center aligned grid">
   <div class="column1">
     <h2 class="ui teal image header">
@@ -81,7 +84,7 @@ $tpTitle = 'Login - BDPI USP';
     </div>
   </div>
 </div>
-
+    </div>
 
 <?php
   include "inc/footer.php";

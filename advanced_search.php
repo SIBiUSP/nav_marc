@@ -4,14 +4,16 @@ $tpTitle="BDPI USP - Busca avançada";
 
 <?php
   include 'inc/config.php';
-  include 'inc/header.php';
+  include 'inc/meta-header.php';
   include_once 'inc/functions.php';
 ?>
 
 </head>
 <body>
-       <?php include 'inc/barrauspenav.php'; ?> 
-    <div class="ui text container">
+       <?php include 'inc/barrausp.php'; ?> 
+    <div class="ui container">
+        <?php include 'inc/header.php'; ?>
+        <?php include 'inc/navbar.php'; ?> 
         <div class="ui vertical stripe segment" id="search">
           <h3 class="ui header" >Buscar</h3>
           <form class="ui form" role="form" action="result.php" method="get">
