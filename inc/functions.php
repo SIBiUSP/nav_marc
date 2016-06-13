@@ -69,7 +69,7 @@ function generateUnidadeUSPInit($c, $facet_name, $sort_name, $sort_value, $facet
         echo ' <a href="result.php?'.substr($facet_name, 1).'='.$facets['_id'].'"><div class="ui card" data-title="'.trim($facets['_id']).'" style="box-shadow:none;"><div class="image">';
                 $file = 'inc/images/logosusp/'.$facets['_id'].'.jpg';
                 if (file_exists($file)) {
-                echo '<img src="inc/images/logosusp/'.$facets['_id'].'.jpg" style="height: 65px;">';
+                echo '<img src="inc/images/logosusp/'.$facets['_id'].'.jpg" style="height: 65px;width:65px">';
                 } else {
                   echo ''.$facets['_id'].'</a>';
               };
